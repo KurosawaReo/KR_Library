@@ -1,6 +1,6 @@
 /*
    - KR.Sound - (Unity)
-   ver.2026/03/21
+   ver.2026/03/31
 */
 using System;
 using System.Collections.Generic;
@@ -17,15 +17,14 @@ namespace KR.Unity.Sound
     [Serializable]
     public struct SoundData
     {
-        [SerializeField] string    name;  //登録名.
-        [SerializeField] AudioClip audio; //コンポーネント.
-        //get.
-        public string    Name  { get => name; }
-        public AudioClip Audio { get => audio; }
+        public string    name;  //登録名.
+        public AudioClip audio; //コンポーネント.
     }
 
     /// <summary>
-    /// SoundManager用機能[継承想定]
+    /// [継承想定]
+    /// サウンド管理機能.
+    /// シーンを越えて使えるようDontDestroyOnLoad機能つき.
     /// </summary>
     public class SoundMngKR : MonoBehaviour
     {
@@ -33,7 +32,8 @@ namespace KR.Unity.Sound
 
         [Header("- SoundMngKR -")]
         [Space(4)]
-        [SerializeField] AudioSource     audioSource;
+        [SerializeField] AudioSource     audioSourceBgm;
+        [SerializeField] AudioSource     audioSourceSe;
         [Space(4)]
         [SerializeField] List<SoundData> bgmData; //BGMデータ配列.
         [SerializeField] List<SoundData> seData;  //SE データ配列.
@@ -67,12 +67,12 @@ namespace KR.Unity.Sound
             //BGM登録.
             foreach(var i in bgmData)
             {
-                bgmClips.Add(i.Name, i.Audio);
+                bgmClips.Add(i.name, i.audio);
             }
             //SE登録.
             foreach (var i in seData)
             {
-                seClips.Add(i.Name, i.Audio);
+                seClips.Add(i.name, i.audio);
             }
         }
 
@@ -84,9 +84,9 @@ namespace KR.Unity.Sound
         {
             //Dictionaryから値を取得.
             if (bgmClips.TryGetValue(name, out var bgm)) {
-                audioSource.clip = bgm;    //取得したサウンドを入れる.
-                audioSource.loop = isLoop; //ループ設定.
-                audioSource.Play();        //再生.
+                audioSourceBgm.clip = bgm;    //取得したサウンドを入れる.
+                audioSourceBgm.loop = isLoop; //ループ設定.
+                audioSourceBgm.Play();        //再生.
             }
         }
         /// <summary>
@@ -97,22 +97,47 @@ namespace KR.Unity.Sound
         {
             //Dictionaryから値を取得.
             if (seClips.TryGetValue(name, out var se)) {
-                audioSource.PlayOneShot(se); //取得したサウンドを再生.
+                audioSourceSe.PlayOneShot(se); //取得したサウンドを再生.
             }
         }
+
         /// <summary>
-        /// BGM停止.
+        /// BGMを停止.
         /// </summary>
         public void StopBGM()
         {
-            audioSource.Stop(); //現在流してるBGMを停止.
+            audioSourceBgm.Stop();
         }
         /// <summary>
-        /// 音量設定.
+        /// SEを停止.
         /// </summary>
-        public void SetVolume(float volume)
+        public void StopSE()
         {
-            audioSource.volume = Mathf.Clamp(volume, 0f, 1f); //0.0～1.0の範囲で設定.
+            audioSourceSe.Stop();
+        }
+
+        /// <summary>
+        /// BGM音量取得.
+        /// </summary>
+        public float GetVolumeBGM() => audioSourceBgm.volume;
+        /// <summary>
+        /// SE音量取得.
+        /// </summary>
+        public float GetVolumeSE() => audioSourceSe.volume;
+
+        /// <summary>
+        /// BGM音量設定.
+        /// </summary>
+        public void SetVolumeBGM(float volume)
+        {
+            audioSourceBgm.volume = Mathf.Clamp(volume, 0f, 1f); //0.0～1.0の範囲で設定.
+        }
+        /// <summary>
+        /// SE音量設定.
+        /// </summary>
+        public void SetVolumeSE(float volume)
+        {
+            audioSourceSe.volume = Mathf.Clamp(volume, 0f, 1f); //0.0～1.0の範囲で設定.
         }
     }
 }

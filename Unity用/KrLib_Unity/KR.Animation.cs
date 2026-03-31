@@ -1,6 +1,6 @@
 /*
    - KR.Animation - (Unity)
-   ver.2026/03/30
+   ver.2026/03/31
 */
 using System;
 using UnityEngine;
@@ -11,8 +11,8 @@ using UnityEngine;
 namespace KR.Unity.Animation
 {
     /// <summary>
-    /// プログラムで作るアニメーション用機能
     /// [継承想定]
+    /// プログラムで作るアニメーション用機能.
     /// </summary>
     public class AnimProgKR : MonoBehaviour
     {
@@ -68,8 +68,8 @@ namespace KR.Unity.Animation
     }
 
     /// <summary>
-    /// UnityのAnimationで作るアニメーション用機能
     /// [継承想定]
+    /// UnityのAnimationで作るアニメーション用機能.
     /// </summary>
     public class AnimUnityKR : MonoBehaviour
     {

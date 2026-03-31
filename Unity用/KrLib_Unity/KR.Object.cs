@@ -1,6 +1,6 @@
 /*
    - KR.Object - (Unity)
-   ver.2026/03/30
+   ver.2026/03/31
 */
 using UnityEngine;
 using UE = UnityEngine;
@@ -47,7 +47,8 @@ namespace KR.Unity.Object
     }
 
     /// <summary>
-    /// オブジェクトデータ(2D用)[継承想定]
+    /// [継承想定]
+    /// オブジェクトデータ(2D用)
     /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     public class ObjectKR : MonoBehaviour
