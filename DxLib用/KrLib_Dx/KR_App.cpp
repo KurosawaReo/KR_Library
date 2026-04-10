@@ -1,6 +1,6 @@
 /*
    - KR_App.cpp - (DxLib)
-   ver.2026/02/07
+   ver.2026/04/10
 */
 #include "KR_App.h"
 

@@ -1,6 +1,6 @@
 /*
    - KR_App.h - (DxLib)
-   ver.2026/02/07
+   ver.2026/04/10
 
    プログラムの根底(開始,終了など)の処理。
 */
@@ -49,7 +49,7 @@ namespace KR
 		static DBL_XY    ToWorldPos (DBL_XY pos);
 		static DBL_XY    ToCameraPos(DBL_XY pos);
 
-		static ResultInt InitDx(int windowWid, int windowHei, bool isWindowMode, int fps, bool isVSync = TRUE);
+		static ResultInt InitDx(int windowWid, int windowHei, bool isWindowMode, int fps, bool isVSync = true);
 		static void		 LoopDx();
 
 		static void		 Reset(); //全管理クラスのリセット.
