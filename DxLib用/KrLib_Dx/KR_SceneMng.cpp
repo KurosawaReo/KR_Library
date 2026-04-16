@@ -1,6 +1,5 @@
 /*
    - KR_Scene.cpp - (DxLib)
-   ver.2026/02/19
 */
 #include "KR_SceneMng.h"
 

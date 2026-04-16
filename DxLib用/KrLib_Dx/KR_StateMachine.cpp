@@ -1,6 +1,5 @@
 /*
    - KR_StateMachine.cpp - (DxLib)
-   ver.2026/01/31
 */
 #pragma once
 #include "KR_StateMachine.h"

@@ -1,6 +1,5 @@
 /*
    - KR_Sound.cpp - (DxLib)
-   ver.2026/01/28
 */
 #include "KR_Sound.h"
 

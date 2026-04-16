@@ -1,6 +1,6 @@
 /*
    - KR_Singleton.h - (C++)
-   ver.2026/04/02
+   ver.2026/04/16
 
    シングルトンクラス用機能。(試験的)
 */
@@ -13,7 +13,7 @@
 */
 
 /*
-   シングルトンテンプレ[継承想定]
+   シングルトンテンプレ [継承想定]
 
    これも入れて使う。コンストラクタをprivateにしても使えるように。
    friend class Singleton<T>; //Tにはクラス名を入れる.
@@ -32,6 +32,6 @@ public:
     Singleton& operator=(const Singleton&) = delete;
 
 protected:
-    Singleton() {}  //継承クラスからのみ生成可,
+    Singleton() {}  //継承クラスからのみ生成可.
     ~Singleton() {}
 };

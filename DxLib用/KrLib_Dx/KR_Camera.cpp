@@ -1,6 +1,5 @@
 /*
    - KR_Camera.cpp - (DxLib)
-   ver.2026/02/08
 */
 #include "KR_Camera.h"
 

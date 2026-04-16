@@ -1,6 +1,5 @@
 /*
    - KR_Format.cpp - (C++)
-   ver.2026/01/28
 */
 #include "KR_Format.h"
 

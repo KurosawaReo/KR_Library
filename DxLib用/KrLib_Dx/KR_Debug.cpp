@@ -1,6 +1,5 @@
 /*
    - KR_Debug.cpp - (DxLib)
-   ver.2026/02/09
 */
 #include "KR_Debug.h"
 

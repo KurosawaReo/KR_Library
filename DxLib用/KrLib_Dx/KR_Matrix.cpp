@@ -1,6 +1,5 @@
 /*
    - KR_Matrix.cpp - (DxLib)
-   ver.2026/02/12
 */
 #include "KR_Matrix.h"
 

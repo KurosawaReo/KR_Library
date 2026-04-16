@@ -1,6 +1,6 @@
 /*
    - KR_Global.h - (C++)
-   ver.2026/02/09
+   ver.2026/04/16
 
    KrLib全体で使う汎用プログラム。
 */
@@ -46,8 +46,9 @@ using std::to_wstring;
 #define _deg(n) (n)*(180/M_PI)
 //便利マクロ.
 #define _if_check(n)        assert(n); if(n)             //if文の前に同条件のassertを挟む.
-#define _return(num, condi) if (condi) { return num; }   //条件に合うならreturnする.(cond = 条件)
-#define _get_name(value)    #value                       //名前を取得(変数名など)
+#define _return(num, condi) if (condi) { return num; }   //条件に合うならreturnする(cond = 条件)
+#define _get_name(value)    #value                       //変数名や関数名を取得.
+#define _elif               else if                      //「else if」の略.
 //template用マクロ.
 #define _type_num_only(T)	typename = typename std::enable_if_t<std::is_arithmetic<T>::value> //算術型(int/float/double/char)のみOKとし, そうでない場合は関数を無効にする.
 

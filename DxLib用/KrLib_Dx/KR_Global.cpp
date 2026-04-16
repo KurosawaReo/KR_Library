@@ -1,6 +1,5 @@
 /*
-   - KR_Global.h - (DxLib)
-   ver.2026/02/19
+   - KR_Global.cpp - (DxLib)
 */
 #include "KR_Global.h"
 

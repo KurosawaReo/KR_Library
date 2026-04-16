@@ -1,6 +1,5 @@
 /*
    - KR_Calc.cpp - (DxLib)
-   ver.2026/02/12
 */
 #include "KR_Calc.h"
 

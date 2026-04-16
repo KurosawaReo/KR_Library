@@ -1,6 +1,6 @@
 /*
    - KR_Global.h - (DxLib)
-   ver.2026/02/19
+   ver.2026/04/16
 
    KrLib全体で使う汎用プログラム。
 */
@@ -177,7 +177,7 @@ namespace KR
 		Polygon(DBL_XY _pos, const vector<DBL_XY>& _points, MY_COLOR _color, float _thick);
 	};
 
-	//3D四角形データ[試作品]
+	//3D四角形データ [試作品]
 	struct Box3D
 	{
 		DBL_XYZ  stPos;    //始点座標.

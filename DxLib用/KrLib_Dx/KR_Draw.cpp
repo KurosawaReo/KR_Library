@@ -1,6 +1,5 @@
 /*
    - KR_Draw.cpp - (DxLib)
-   ver.2026/02/10
 */
 #include "KR_Draw.h"
 
@@ -1059,7 +1058,7 @@ namespace KR
 	}
 
 	/*
-	   キューブ(3D)[試作品]
+	   キューブ(3D) [試作品]
 	*/
 	ResultInt DrawBox3DKR(const Box3D& box, bool isFill) {
 

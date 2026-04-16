@@ -1,6 +1,6 @@
 /*
    - KR_StateMachine.h - (DxLib)
-   ver.2026/02/04
+   ver.2026/04/16
 
    ステート遷移機能。
 */
@@ -14,7 +14,7 @@
 namespace KR
 {
     /*
-       状態クラス[継承想定]
+       状態クラス [継承想定]
        AIの行動、シーン、stepなど、様々な切り替えに使える.
     */
     class IState
