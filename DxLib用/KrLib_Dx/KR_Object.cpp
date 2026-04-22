@@ -87,10 +87,11 @@ namespace KR
 	}
 	
 	//DrawGraph描画.
-	ResultInt ObjectShape::DrawGraph(Anchor anc, bool isFloat, bool isCameraDisp) {
+	void ObjectShape::DrawGraph(Anchor anc, bool isFloat, bool isCameraDisp) {
 
 		if (!isActive) {
-			return { -1, _T("ObjectShape::DrawGraph"), _T("非アクティブ") };
+			throw ErrorMsg(_T("ObjectShape::DrawGraph"), _T("非アクティブ"));
+			return;
 		}
 
 		UpdateImg(); //画像更新.
@@ -102,28 +103,32 @@ namespace KR
 				//座標にoffsetを足す.
 				DBL_XY pos = GetPos() + offset;
 				//描画.
-				ResultInt err = pImg->Draw(pos, anc, true, isFloat, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -2, _T("ObjectShape::DrawGraph"), _T("描画エラー") };
+				try {
+					pImg->Draw(pos, anc, true, isFloat, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("ObjectShape::DrawGraph"), err.GetResult());
+					return;
 				}
 			}
 			else {
 				DrawShape(); //代わりに図形を描画.
-				return { -3, _T("ObjectShape::DrawGraph"), _T("不明な画像名") };
+				throw ErrorMsg(_T("ObjectShape::DrawGraph"), _T("不明な画像名"));
+				return;
 			}
 		}
 		else {
 			DrawShape(); //代わりに図形を描画.
-			return { -4, _T("ObjectShape::DrawGraph"), _T("画像未登録") };
+			throw ErrorMsg(_T("ObjectShape::DrawGraph"), _T("画像未登録"));
+			return;
 		}
-
-		return { 0, _T("ObjectShape::DrawGraph"), _T("正常終了") };
 	}
 	//DrawRectGraph描画.
-	ResultInt ObjectShape::DrawRectGraph(DBL_RECT rect, Anchor anc, bool isFloat, bool isCameraDisp) {
+	void ObjectShape::DrawRectGraph(DBL_RECT rect, Anchor anc, bool isFloat, bool isCameraDisp) {
 
 		if (!isActive) {
-			return { -1, _T("ObjectShape::DrawRectGraph"), _T("非アクティブ") };
+			throw ErrorMsg(_T("ObjectShape::DrawRectGraph"), _T("非アクティブ"));
+			return;
 		}
 
 		UpdateImg(); //画像更新.
@@ -135,28 +140,32 @@ namespace KR
 				//座標にoffsetを足す.
 				DBL_XY pos = GetPos() + offset;
 				//描画.
-				ResultInt err = pImg->DrawRect(pos, rect, anc, true, isFloat, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -2, _T("ObjectShape::DrawRectGraph"), _T("描画エラー") };
+				try {
+					pImg->DrawRect(pos, rect, anc, true, isFloat, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("ObjectShape::DrawRectGraph"), err.GetResult());
+					return;
 				}
 			}
 			else {
 				DrawShape(); //代わりに図形を描画.
-				return { -3, _T("ObjectShape::DrawRectGraph"), _T("不明な画像名") };
+				throw ErrorMsg(_T("ObjectShape::DrawRectGraph"), _T("不明な画像名"));
+				return;
 			}
 		}
 		else {
 			DrawShape(); //代わりに図形を描画.
-			return { -4, _T("ObjectShape::DrawRectGraph"), _T("画像未登録") };
+			throw ErrorMsg(_T("ObjectShape::DrawRectGraph"), _T("画像未登録"));
+			return;
 		}
-
-		return { 0, _T("ObjectShape::DrawRectGraph"), _T("正常終了") };
 	}
 	//DrawExtendGraph描画.
-	ResultInt ObjectShape::DrawExtendGraph(DBL_XY sizeRate, Anchor anc, bool isFloat, bool isCameraDisp) {
+	void ObjectShape::DrawExtendGraph(DBL_XY sizeRate, Anchor anc, bool isFloat, bool isCameraDisp) {
 
 		if (!isActive) {
-			return {-1, _T("ObjectShape::DrawExtendGraph"), _T("非アクティブ")};
+			throw ErrorMsg(_T("ObjectShape::DrawExtendGraph"), _T("非アクティブ"));
+			return;
 		}
 
 		UpdateImg(); //画像更新.
@@ -168,28 +177,32 @@ namespace KR
 				//座標にoffsetを足す.
 				DBL_XY pos = GetPos() + offset;
 				//描画.
-				ResultInt err = pImg->DrawExtend(pos, sizeRate, anc, true, isFloat, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -2, _T("ObjectShape::DrawExtendGraph"), _T("描画エラー") };
+				try {
+					pImg->DrawExtend(pos, sizeRate, anc, true, isFloat, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("ObjectShape::DrawExtendGraph"), err.GetResult());
+					return;
 				}
 			}
 			else {
 				DrawShape(); //代わりに図形を描画.
-				return { -3, _T("ObjectShape::DrawExtendGraph"), _T("不明な画像名") };
+				throw ErrorMsg(_T("ObjectShape::DrawExtendGraph"), _T("不明な画像名"));
+				return;
 			}
 		}
 		else {
 			DrawShape(); //代わりに図形を描画.
-			return { -4, _T("ObjectShape::DrawExtendGraph"), _T("画像未登録") };
+			throw ErrorMsg(_T("ObjectShape::DrawExtendGraph"), _T("画像未登録"));
+			return;
 		}
-
-		return { 0, _T("ObjectShape::DrawExtendGraph"), _T("正常終了") };
 	}
 	//DrawRotaGraph描画.
-	ResultInt ObjectShape::DrawRotaGraph(double ang, double sizeRate, INT_XY pivot, bool isFloat, bool isCameraDisp) {
+	void ObjectShape::DrawRotaGraph(double ang, double sizeRate, INT_XY pivot, bool isFloat, bool isCameraDisp) {
 
 		if (!isActive) {
-			return { -1, _T("ObjectShape::DrawRotaGraph"), _T("非アクティブ") };
+			throw ErrorMsg(_T("ObjectShape::DrawRotaGraph"), _T("非アクティブ"));
+			return;
 		}
 
 		UpdateImg(); //画像更新.
@@ -201,22 +214,25 @@ namespace KR
 				//座標にoffsetを足す.
 				DBL_XY pos = GetPos() + offset;
 				//描画.
-				ResultInt err = pImg->DrawRota(pos, sizeRate, ang, pivot, true, isFloat, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -2, _T("ObjectShape::DrawRotaGraph"), _T("描画エラー") };
+				try {
+					pImg->DrawRota(pos, sizeRate, ang, pivot, true, isFloat, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("ObjectShape::DrawRotaGraph"), err.GetResult());
+					return;
 				}
 			}
 			else {
 				DrawShape(); //代わりに図形を描画.
-				return { -3, _T("ObjectShape::DrawRotaGraph"), _T("不明な画像名") };
+				throw ErrorMsg(_T("ObjectShape::DrawRotaGraph"), _T("不明な画像名"));
+				return;
 			}
 		}
 		else {
 			DrawShape(); //代わりに図形を描画.
-			return { -4, _T("ObjectShape::DrawRotaGraph"), _T("画像未登録") };
+			throw ErrorMsg(_T("ObjectShape::DrawRotaGraph"), _T("画像未登録"));
+			return;
 		}
-
-		return { 0, _T("ObjectShape::DrawRotaGraph"), _T("正常終了") };
 	}
 
 // ▼*--=<[ ObjectCir ]>=--*▼ //
@@ -234,21 +250,24 @@ namespace KR
 		return Calc::HitLineCir(line, this->cir);
 	}
 	//図形: 円を描画.
-	ResultInt ObjectCir::DrawShape(bool isFill, bool isAnti, bool isCameraDisp) const {
+	void ObjectCir::DrawShape(bool isFill, bool isAnti, bool isCameraDisp) const {
 
 		if (!isActive) {
-			return {-1, _T("ObjectCir::DrawShape"), _T("非アクティブ")};
+			throw ErrorMsg(_T("ObjectCir::DrawShape"), _T("非アクティブ"));
+			return;
 		}
 
 		//座標にoffsetを足す.
 		Circle tmpCir = cir;
 		tmpCir.pos += offset;
 		//描画.
-		ResultInt err = DrawCircleKR(tmpCir, Anchor::Mid, isFill, isAnti, isCameraDisp);
-		if (err.GetCode() < 0) {
-			return {-2, _T("ObjectCir::DrawShape"), _T("DrawCircleKRエラー")};
+		try {
+			DrawCircleKR(tmpCir, Anchor::Mid, isFill, isAnti, isCameraDisp);
 		}
-		return {0, _T("ObjectCir::DrawShape"), _T("正常終了") };
+		catch (const ErrorMsg& err) {
+			throw ErrorMsg(_T("ObjectCir::DrawShape"), err.GetResult());
+			return;
+		}
 	}
 
 // ▼*--=<[ ObjectBox ]>=--*▼ //
@@ -262,30 +281,34 @@ namespace KR
 		return Calc::HitBoxBox(this->box, box);
 	}
 	//図形: 四角形を描画.
-	ResultInt ObjectBox::DrawShape(bool isFill, bool isAnti, bool isCameraDisp) const {
+	void ObjectBox::DrawShape(bool isFill, bool isAnti, bool isCameraDisp) const {
 
 		if (!isActive) {
-			return {-1, _T("ObjectBox::DrawShape"), _T("非アクティブ")};
+			throw ErrorMsg(_T("ObjectBox::DrawShape"), _T("非アクティブ"));
+			return;
 		}
 
 		//座標にoffsetを足す.
 		Box tmpBox = box;
 		tmpBox.pos += offset;
 		//描画.
-		ResultInt err = DrawBoxKR(tmpBox, Anchor::Mid, isFill, isAnti, isCameraDisp);
-		if (err.GetCode() < 0) {
-			return {-2, _T("ObjectBox::DrawShape"), _T("DrawBoxKRエラー")};
+		try {
+			DrawBoxKR(tmpBox, Anchor::Mid, isFill, isAnti, isCameraDisp);
 		}
-		return {0, _T("ObjectBox::DrawShape"), _T("正常終了")};
+		catch (const ErrorMsg& err) {
+			throw ErrorMsg(_T("ObjectBox::DrawShape"), err.GetResult());
+			return;
+		}
 	}
 
 // ▼*--=<[ ObjectGrid ]>=--*▼ //
 
 	//オブジェクト(ObjectGrid型)の描画.
-	ResultInt ObjectGrid::Draw(const DrawImg& img, INT_XY gridPos, INT_XY gridSize) {
+	void ObjectGrid::Draw(const DrawImg& img, INT_XY gridPos, INT_XY gridSize) {
 
 		if (!isActive) {
-			return {-1, _T("ObjectGrid::Draw"), _T("非アクティブ") };
+			throw ErrorMsg(_T("ObjectGrid::Draw"), _T("非アクティブ"));
+			return;
 		}
 
 		//座標.
@@ -294,10 +317,12 @@ namespace KR
 			gridPos.y + pos.y * gridSize.y
 		};
 		//画像描画.
-		ResultInt err = img.Draw(newPos.ToDbl(), Anchor::LU);
-		if (err.GetCode() < 0) {
-			return {-2, _T("ObjectGrid::Draw"), _T("画像描画エラー")};
+		try {
+			img.Draw(newPos.ToDbl(), Anchor::LU);
 		}
-		return {0, _T("ObjectGrid::Draw"), _T("正常終了")};
+		catch (const ErrorMsg& err) {
+			throw ErrorMsg(_T("ObjectGrid::Draw"), err.GetResult());
+			return;
+		}
 	}
 }

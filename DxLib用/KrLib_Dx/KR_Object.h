@@ -1,6 +1,6 @@
 /*
    - KR_Object.h - (DxLib)
-   ver.2026/04/16
+   ver.2026/04/23
 
    オブジェクト機能。
    継承して使うことで、Draw/Calc/Inputの一部機能をオブジェクト指向で使える。
@@ -73,11 +73,11 @@ namespace KR
 		void      MovePadStick   (float speed);
 		void      MoveMousePos   (bool isMoveX = true, bool isMoveY = true);
 		//Drawの機能.
-		virtual ResultInt DrawShape(bool isFill = true, bool isAnti = false, bool isCameraDisp = true) const = 0;
-		ResultInt DrawGraph      (                                                          Anchor anc = Anchor::Mid, bool isFloat = false, bool isCameraDisp = true);
-		ResultInt DrawRectGraph  (DBL_RECT rect,                                            Anchor anc = Anchor::Mid, bool isFloat = false, bool isCameraDisp = true);
-		ResultInt DrawExtendGraph(DBL_XY sizeRate,                                          Anchor anc = Anchor::Mid, bool isFloat = false, bool isCameraDisp = true);
-		ResultInt DrawRotaGraph  (double ang, double sizeRate = 1.0, INT_XY pivot = {0, 0},                           bool isFloat = false, bool isCameraDisp = true);
+		virtual void DrawShape(bool isFill = true, bool isAnti = false, bool isCameraDisp = true) const = 0;
+		void      DrawGraph      (                                                          Anchor anc = Anchor::Mid, bool isFloat = false, bool isCameraDisp = true);
+		void      DrawRectGraph  (DBL_RECT rect,                                            Anchor anc = Anchor::Mid, bool isFloat = false, bool isCameraDisp = true);
+		void      DrawExtendGraph(DBL_XY sizeRate,                                          Anchor anc = Anchor::Mid, bool isFloat = false, bool isCameraDisp = true);
+		void      DrawRotaGraph  (double ang, double sizeRate = 1.0, INT_XY pivot = {0, 0},                           bool isFloat = false, bool isCameraDisp = true);
 	};
 
 	//オブジェクト(円) [継承想定]
@@ -108,7 +108,7 @@ namespace KR
 		bool      HitCheckBox (const Box&    box)  const;
 		bool      HitCheckLine(const Line&   line) const;
 		//描画.
-		ResultInt DrawShape(bool isFill = true, bool isAnti = false, bool isCameraDisp = true) const override;
+		void      DrawShape(bool isFill = true, bool isAnti = false, bool isCameraDisp = true) const override;
 	};
 
 	//オブジェクト(四角形) [継承想定]
@@ -138,7 +138,7 @@ namespace KR
 		bool      HitCheckCir(const Circle& cir) const;
 		bool      HitCheckBox(const Box&    box) const;
 		//描画.
-		ResultInt DrawShape(bool isFill = true, bool isAnti = false, bool isCameraDisp = true) const override;
+		void      DrawShape(bool isFill = true, bool isAnti = false, bool isCameraDisp = true) const override;
 	};
 
 	//オブジェクト(グリッド上専用)
@@ -149,6 +149,6 @@ namespace KR
 		bool   isActive{}; //有効かどうか.
 
 		//描画.
-		ResultInt Draw(const DrawImg& img, INT_XY gridPos, INT_XY gridSize);
+		void Draw(const DrawImg& img, INT_XY gridPos, INT_XY gridSize);
 	};
 }

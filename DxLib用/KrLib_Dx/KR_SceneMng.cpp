@@ -27,17 +27,15 @@ namespace KR
 		inst.scenes[saveName] = sceneClass; //ƒNƒ‰ƒX‚ğ“o˜^.
 	}
 	//ƒV[ƒ“•ÏX.
-	ResultInt SceneMng::SetScene(string saveName) {
-		//“o˜^‚³‚ê‚Ä‚ê‚Î.
-		if (inst.scenes.count(saveName) > 0) {
-
-			//Ÿ‚ÌƒV[ƒ“‚Éİ’è.
-			inst.sceneChanger.RequestChange(inst.scenes[saveName]);
-			inst.nowSceneName = saveName;
-
-			return { 0, _T("SceneMng::SetScene"), _T("³íI—¹") };
+	void SceneMng::SetScene(string saveName) {
+		//“o˜^‚³‚ê‚Ä‚È‚¯‚ê‚Î.
+		if (inst.scenes.count(saveName) <= 0) {
+			throw ErrorMsg(_T("SceneMng::SetScene"), _T("–¢“o˜^ƒV[ƒ“"));
+			return;
 		}
-		return { -1, _T("SceneMng::SetScene"), _T("–¢“o˜^‚ÌƒV[ƒ“") };
+		//Ÿ‚ÌƒV[ƒ“‚Éİ’è.
+		inst.sceneChanger.RequestChange(inst.scenes[saveName]);
+		inst.nowSceneName = saveName;
 	}
 
 	//Šî–{ˆ—(©“®Às)

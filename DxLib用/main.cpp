@@ -1,6 +1,6 @@
 /*
    - main.cpp - (DxLib)
-   ver.2026/02/04
+   ver.2026/04/23
 
    プログラムの開始地点(テンプレ)
 */
@@ -36,9 +36,13 @@ int WINAPI WinMain(
 	_In_     LPSTR     lpCmdLine,
 	_In_     int       nCmdShow
 ){
-	//初期化処理.
-	ResultInt err = App::InitDx(800, 600, true, 60, false);
-	if (err.GetCode() < 0) { return -1; } //初期化エラー.
+	try {
+		//初期化処理.
+		App::InitDx(WINDOW_WID, WINDOW_HEI, IS_WINDOW_MODE, FPS, false);
+	}
+	catch (...) {
+		return -1; //エラー終了.
+	}
 	//ループ処理.
 	App::LoopDx();
 

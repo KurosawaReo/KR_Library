@@ -1,6 +1,6 @@
 /*
    - KR_ObjectMng.h - (DxLib)
-   ver.2026/04/16
+   ver.2026/04/23
 
    オブジェクトを扱う管理クラス。
 */
@@ -29,7 +29,7 @@ namespace KR
 	//▼ ===== 関数 ===== ▼.
 	public:
 		//get.
-		int GetObjectCnt() const { return objects.size(); }
+		int GetObjectCnt() const { return _int(objects.size()); }
 
 		//object追加.
 		void AddObject(ObjectShape* obj) {

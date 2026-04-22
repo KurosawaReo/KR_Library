@@ -1,6 +1,6 @@
 /*
    - KR_File.h - (C++)
-   ver.2026/04/16
+   ver.2026/04/23
 
    ファイルの読み取り/書き出し機能。
 */
@@ -22,7 +22,7 @@ namespace KR
 
 	//▼ ===== 関数 ===== ▼.
 	private:
-		ResultInt MakeDir(MY_STRING path); //フォルダを作成(なければ)
+		void MakeDir(MY_STRING path); //フォルダを作成(なければ)
 
 	public:
 		//デストラクタ.
@@ -30,7 +30,7 @@ namespace KR
 			Close(); //自動で閉じる.
 		}
 
-		ResultInt Open   (MY_STRING path, MY_STRING mode, bool isMakeDir = false); //ファイルを開く.
+		void      Open   (MY_STRING path, MY_STRING mode, bool isMakeDir = false); //ファイルを開く.
 		void	  Close  ();								                       //ファイルを閉じる.
 
 		MY_STRING ReadString ();               //読み込み(文字列)

@@ -41,7 +41,7 @@ namespace KR
 	}
 
 	//DxLibの初期化処理.
-	ResultInt App::InitDx(int windowWid, int windowHei, bool isWindowMode, int fps, bool isVSync) {
+	void App::InitDx(int windowWid, int windowHei, bool isWindowMode, int fps, bool isVSync) {
 
 		ChangeWindowMode(isWindowMode);				//TRUEでwindow, FALSEで全画面にする.
 		SetWindowSize   (windowWid, windowHei);		//ウィンドウサイズの設定.
@@ -52,7 +52,8 @@ namespace KR
 
 		//DxLibの初期化.
 		if (DxLib_Init() == -1) {
-			return {-1, _T("App::InitDx"), _T("初期化エラー")};
+			throw ErrorMsg(_T("App::InitDx"), _T("初期化エラー"));
+			return;
 		}
 
 		//fps計測用タイマー.
@@ -70,8 +71,6 @@ namespace KR
 		}
 		//Resetを実行.
 		Reset();
-
-		return {0, _T("App::InitDx"), _T("正常終了")};
 	}
 
 	//DxLibのループ処理.

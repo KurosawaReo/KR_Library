@@ -191,19 +191,22 @@ namespace KR
 		}
 	}
 	//描画.
-	//isDotがtrueの場合、thickとisAntiは使わない.
-	ResultInt SplineContr::Draw(int degree, bool isDot, bool isAnti, bool isCameraDisp) {
+	//isDotがtrueの場合、isAntiは使わない.
+	void SplineContr::Draw(int degree, bool isDot, bool isAnti, bool isCameraDisp) {
 
 		//制御点の数が足りなければ描画しない.
 		if (spline.points.size() <= degree) {
-			return { -1, _T("SplineContr::Draw"), _T("制御点の数不足") };
+			throw ErrorMsg(_T("SplineContr::Draw"), _T("制御点の数不足"));
+			return;
 		}
 
 		//スプライン曲線.
 		if (isDispLine) {
-			ResultInt err = DrawSplineKR(spline, degree, isDot, isAnti, isCameraDisp);
-			if (err.GetCode() < 0) {
-				return { -2, _T("SplineContr::Draw"), _T("DrawSplineKRエラー") };
+			try {
+				DrawSplineKR(spline, degree, isDot, isAnti, isCameraDisp);
+			}
+			catch (const ErrorMsg& err) {
+				throw ErrorMsg(_T("SplineContr::Draw"), err.GetResult());
 			}
 		}
 		//制御点.
@@ -212,8 +215,6 @@ namespace KR
 				i.Draw();
 			}
 		}
-
-		return { 0, _T("SplineContr::Draw"), _T("正常終了") };
 	}
 
 // ▼*--=<[ FreeContr ]>=--*▼ //

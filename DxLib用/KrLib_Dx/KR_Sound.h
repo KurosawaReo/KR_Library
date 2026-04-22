@@ -1,6 +1,6 @@
 /*
    - KR_Sound.h - (DxLib)
-   ver.2026/04/16
+   ver.2026/04/23
 
    サウンド再生機能。
 */
@@ -33,10 +33,10 @@ namespace KR
 
 	//▼ ===== 関数 ===== ▼.
 	private:
-		ResultInt LoadFile(MY_STRING fileName);	//読み込み.
-		void      Release();					//解放.
-		void	  Update();						//更新.
-		int		  GetVolumeRange(int volume);	//ボリューム値を有効範囲に変換.
+		void LoadFile(MY_STRING fileName);	//読み込み.
+		void Release();						//解放.
+		void Update();						//更新.
+		int	 GetVolumeRange(int volume);	//ボリューム値を有効範囲に変換.
 		 
 	public:
 		//コンストラクタ, デストラクタ.
@@ -44,11 +44,11 @@ namespace KR
 		Sound();
 		~Sound();
 
-		void	  Play        (bool isLoop, int volume = 100);      //再生.
-		void      Stop        ();									//停止.
-		void	  ChangeVolume(int volume, float sec = 0);			//音量変更設定.
-		void	  FadeInPlay  (bool isLoop, int volume, float sec); //フェードイン再生.
-		void	  FadeOutPlay (float sec);						    //フェードアウトする.
+		void Play        (bool isLoop, int volume = 100);		//再生.
+		void Stop        ();									//停止.
+		void ChangeVolume(int volume, float sec = 0);			//音量変更設定.
+		void FadeInPlay  (bool isLoop, int volume, float sec);	//フェードイン再生.
+		void FadeOutPlay (float sec);						    //フェードアウトする.
 
 		//使用禁止(「=」で実体が複製されて、意図せずデストラクタが実行されるのを防ぐため)
 		Sound& operator=(const Sound&) = delete;
@@ -63,8 +63,9 @@ namespace KR
 
 	//▼ ===== 変数 ===== ▼.
 	private: 
-		umap<string, Sound> sounds;
-	
+		umap<string, Sound> sounds; //サウンドデータ.
+		MY_STRING           path;   //共通パス.
+
 	//▼ ===== 関数 ===== ▼.
 	private: 
 		//コンストラクタ.
@@ -73,12 +74,14 @@ namespace KR
 		~SoundMng();
 
 	public:
+		//set.
+		static void   SetPath (MY_STRING path);
 		//get.
-		static Sound*    Get     (string saveName);
-		static bool      TryGet  (string saveName, Sound* ptr);
+		static Sound* Get     (string saveName);
+		static bool   TryGet  (string saveName, Sound* ptr);
 
-		static ResultInt LoadFile(MY_STRING fileName, string saveName); //読み込み.
-		static void      StopAll ();									//全サウンド停止.
+		static void   LoadFile(MY_STRING fileName, string saveName); //読み込み.
+		static void   StopAll ();									 //全サウンド停止.
 	
 		void Init()   override {} //未使用.
 		void Reset()  override {} //未使用.

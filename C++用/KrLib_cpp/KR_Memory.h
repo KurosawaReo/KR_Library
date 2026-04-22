@@ -1,6 +1,6 @@
 /*
    - KR_Memory.h - (C++)
-   ver.2026/04/16
+   ver.2026/04/23
 
    メモリ管理機能。
 */
@@ -17,7 +17,7 @@
 #include <crtdbg.h>
 
 #ifdef _DEBUG
-#define new new(_NORMAL_BLOCK, __FILE__, __LINE__) //new演算子の代用.
+  #define new new(_NORMAL_BLOCK, __FILE__, __LINE__) //new演算子の代用.
 #endif
 /*----------------------------------*/
 

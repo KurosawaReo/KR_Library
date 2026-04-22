@@ -1,6 +1,6 @@
 /*
    - KR_CurveLine.h - (DxLib)
-   ver.2026/04/16
+   ver.2026/04/23
 
    ベジエ曲線と、スプライン曲線。
 */
@@ -116,14 +116,14 @@ namespace KR
 			spline.color = ColorID::White; //初期カラー.
 		}
 		//set.
-		void      SetColor(ColorID _color);
+		void   SetColor(ColorID _color);
 		//add.
-		void      AddPoint(DBL_XY pos); //制御点追加.
+		void   AddPoint(DBL_XY pos); //制御点追加.
 		//get.
-		DBL_XY    GetSplinePoint(int degree, double time) const;
+		DBL_XY GetSplinePoint(int degree, double time) const;
 
-		void      Update();
-		ResultInt Draw(int degree, bool isDot, bool isAnti = false, bool isCameraDisp = true);
+		void   Update();
+		void   Draw(int degree, bool isDot, bool isAnti = false, bool isCameraDisp = true);
 	};
 
 	/*

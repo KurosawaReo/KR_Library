@@ -20,18 +20,16 @@ namespace KR
 	};
 
 	//ファイル読み込み.
-	ResultInt Sound::LoadFile(MY_STRING fileName) {
+	void Sound::LoadFile(MY_STRING fileName) {
 
 		//読み込み済のものは解放.
 		Release();
 		//サウンド読み込み.
 		handle = LoadSoundMem(fileName.c_str());
-
-		//結果を返す.
+		//エラー.
 		if (handle < 0) {
-			return {-1, _T("Sound::LoadFile"), _T("読み込み失敗")};
+			throw ErrorMsg(_T("Sound::LoadFile"), _T("読み込み失敗"));
 		}
-		return {0, _T("Sound::LoadFile"), _T("正常終了")};
 	}
 	//サウンド解放.
 	void Sound::Release() {
@@ -150,6 +148,11 @@ namespace KR
 		sounds.clear(); //データを空にする.
 	}
 
+	//共通パスを設定.
+	void SoundMng::SetPath(MY_STRING _path) {
+		inst.path = _path;
+	}
+
 	//サウンド取得.
 	Sound* SoundMng::Get(string saveName) {
 		//存在すれば.
@@ -169,18 +172,24 @@ namespace KR
 	}
 
 	//サウンド読み込み.
-	ResultInt SoundMng::LoadFile(MY_STRING fileName, string saveName) {
+	void SoundMng::LoadFile(MY_STRING fileName, string saveName) {
 	
 		//既に存在すれば.
 		if (inst.sounds.count(saveName) > 0) {
-			return {-1, _T("SoundMng::LoadFile"), _T("使用済みの保存名")};
+			throw ErrorMsg(_T("SoundMng::LoadFile"), _T("使用済みの保存名"));
+			return;
 		}
+
+		//パスを作成.
+		const MY_STRING pathFull = inst.path + fileName;
+
 		//ファイル読み込み.
-		ResultInt err = inst.sounds[saveName].LoadFile(fileName);
-		if (err.GetCode() < 0) {
-			return {-2, _T("SoundMng::LoadFile"), _T("LoadFileエラー")};
+		try {
+			inst.sounds[saveName].LoadFile(pathFull);
 		}
-		return {0, _T("SoundMng::LoadFile"), _T("正常終了")};
+		catch (const ErrorMsg& err) {
+			throw ErrorMsg(_T("SoundMng::LoadFile"), err.GetResult());
+		}
 	}
 	//全サウンド停止.
 	void SoundMng::StopAll() {

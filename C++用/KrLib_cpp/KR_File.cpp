@@ -10,7 +10,7 @@
 namespace KR
 {
 	//ファイルを開く.
-	ResultInt File::Open(MY_STRING path, MY_STRING mode, bool isMakeDir) {
+	void File::Open(MY_STRING path, MY_STRING mode, bool isMakeDir) {
 
 		//先にファイルを閉じる.
 		Close();
@@ -19,9 +19,8 @@ namespace KR
 		//ファイルを開く(fopen)
 		fp = _tfopen(path.c_str(), mode.c_str());
 		if (fp == nullptr) {
-			return {-1, _T("File::Open"), _T("読み込みエラー")};
+			throw ErrorMsg(_T("File::Open"), _T("読み込みエラー"));
 		}
-		return {0, _T("File::Open"), _T("正常終了")};
 	}
 	//ファイルを閉じる.
 	void File::Close() {
@@ -33,18 +32,17 @@ namespace KR
 		}
 	}
 	//フォルダを作成(なければ)
-	ResultInt File::MakeDir(MY_STRING path) {
+	void File::MakeDir(MY_STRING path) {
 		//文字数ループ.
 		for (int i = 0; i < path.size(); i++) {
 			//「/」区切りでフォルダ作成.
 			if (path[i] == '/') {
 				int err = _tmkdir(path.substr(0, i).c_str());
 				if (err < 0) {
-					return {-1, _T("File::MakeDir"), _T("_tmkdirエラー")};
+					throw ErrorMsg(_T("File::MakeDir"), _T("_tmkdirエラー"));
 				}
 			}
 		}
-		return {0, _T("File::MakeDir"), _T("正常終了")};
 	}
 
 	//読み込み(文字列)
@@ -57,7 +55,8 @@ namespace KR
 			return str;
 		}
 		else {
-			return _T("null"); //読み込み失敗.
+			throw ErrorMsg(_T("File::ReadString"), _T("読み込み失敗"));
+			return _T("null");
 		}
 	}
 	//読み込み(数字)
@@ -70,7 +69,8 @@ namespace KR
 			return _ttoi(str);     //int型に変換(atoi)
 		}
 		else {
-			return -1; //読み込み失敗.
+			throw ErrorMsg(_T("File::ReadInt"), _T("読み込み失敗"));
+			return -1;
 		}
 	}
 	//書き込み(文字列)

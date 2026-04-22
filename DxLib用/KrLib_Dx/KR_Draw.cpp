@@ -74,10 +74,11 @@ namespace KR
 	/*
 	   DrawGraphの改造版.
 	*/
-	ResultInt DrawImg::Draw(DBL_XY pos, Anchor anc, bool isTrans, bool isFloat, bool isCameraDisp) const {
+	void DrawImg::Draw(DBL_XY pos, Anchor anc, bool isTrans, bool isFloat, bool isCameraDisp) const {
 
 		if (handle == NONE_HANDLE) {
-			return {-3, _T("DrawImg::Draw"), _T("ハンドル未設定")};
+			throw ErrorMsg(_T("DrawImg::Draw"), _T("ハンドル未設定"));
+			return;
 		}
 
 		//描画座標.
@@ -91,7 +92,8 @@ namespace KR
 			//float型描画.
 			int err = DrawGraphF(x, y, handle, isTrans);
 			if (err < 0) {
-				return {-1, _T("DrawImg::Draw"), _T("DrawGraphFエラー")};
+				throw ErrorMsg(_T("DrawImg::Draw"), _T("DrawGraphFエラー"));
+				return;
 			}
 		}
 		else {
@@ -101,20 +103,21 @@ namespace KR
 			//int型描画.
 			int err = DrawGraph(x, y, handle, isTrans);
 			if (err < 0) {
-				return {-2, _T("DrawImg::Draw"), _T("DrawGraphエラー")};
+				throw ErrorMsg(_T("DrawImg::Draw"), _T("DrawGraphエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawImg::Draw"), _T("正常終了")};
 	}
 
 	/*
 	   DrawRectGraphの改造版.
 	   Rect = 矩形(正方形や長方形のこと)
 	*/
-	ResultInt DrawImg::DrawRect(DBL_XY pos, DBL_RECT rect, Anchor anc, bool isTrans, bool isFloat, bool isCameraDisp) const {
+	void DrawImg::DrawRect(DBL_XY pos, DBL_RECT rect, Anchor anc, bool isTrans, bool isFloat, bool isCameraDisp) const {
 
 		if (handle == NONE_HANDLE) {
-			return {-3, _T("DrawImg::DrawRect"), _T("ハンドル未設定")};
+			throw ErrorMsg(_T("DrawImg::DrawRect"), _T("ハンドル未設定"));
+			return;
 		}
 
 		//描画座標.
@@ -153,7 +156,8 @@ namespace KR
 					handle, isTrans
 				);
 				if (err < 0) {
-					return {-1, _T("DrawImg::DrawRect"), _T("DrawRectGraphFエラー")};
+					throw ErrorMsg(_T("DrawImg::DrawRect"), _T("DrawRectGraphFエラー"));
+					return;
 				}
 			}
 			else {
@@ -164,21 +168,21 @@ namespace KR
 					handle, isTrans
 				);
 				if (err < 0) {
-					return {-2, _T("DrawImg::DrawRect"), _T("DrawRectGraphエラー")};
+					throw ErrorMsg(_T("DrawImg::DrawRect"), _T("DrawRectGraphエラー"));
+					return;
 				}
 			}
 		}
-
-		return {0, _T("DrawImg::DrawRect"), _T("正常終了")};
 	}
 	
 	/*
 	   DrawExtendGraphの改造版.
 	*/
-	ResultInt DrawImg::DrawExtend(DBL_XY pos, DBL_XY sizeRate, Anchor anc, bool isTrans, bool isFloat, bool isCameraDisp) const {
+	void DrawImg::DrawExtend(DBL_XY pos, DBL_XY sizeRate, Anchor anc, bool isTrans, bool isFloat, bool isCameraDisp) const {
 
 		if (handle == NONE_HANDLE) {
-			return {-3, _T("DrawImg::DrawExtend"), _T("ハンドル未設定")};
+			throw ErrorMsg(_T("DrawImg::DrawExtend"), _T("ハンドル未設定"));
+			return;
 		}
 
 		//描画座標.
@@ -194,7 +198,8 @@ namespace KR
 			//float型描画.
 			int err = DrawExtendGraphF(x1, y1, x2+1, y2+1, handle, isTrans);
 			if (err < 0) {
-				return {-1, _T("DrawImg::DrawExtend"), _T("DrawExtendGraphFエラー")};
+				throw ErrorMsg(_T("DrawImg::DrawExtend"), _T("DrawExtendGraphFエラー"));
+				return;
 			}
 		}
 		else {
@@ -206,10 +211,10 @@ namespace KR
 			//int型描画.
 			int err = DrawExtendGraph(x1, y1, x2+1, y2+1, handle, isTrans);
 			if (err < 0) {
-				return {-2, _T("DrawImg::DrawExtend"), _T("DrawExtendGraphエラー")};
+				throw ErrorMsg(_T("DrawImg::DrawExtend"), _T("DrawExtendGraphエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawImg::DrawExtend"), _T("正常終了")};
 	}
 
 	/*
@@ -220,10 +225,11 @@ namespace KR
 	   F   : float型描画.
 	   Fast: アルゴリズムが高速になったver.
 	*/
-	ResultInt DrawImg::DrawRota(DBL_XY pos, double extend, double ang, INT_XY pivot, bool isTrans, bool isFloat, bool isCameraDisp) const {
+	void DrawImg::DrawRota(DBL_XY pos, double extend, double ang, INT_XY pivot, bool isTrans, bool isFloat, bool isCameraDisp) const {
 
 		if (handle == NONE_HANDLE) {
-			return {-3, _T("DrawImg::DrawRota"), _T("ハンドル未設定")};
+			throw ErrorMsg(_T("DrawImg::DrawRota"), _T("ハンドル未設定"));
+			return;
 		}
 
 		DBL_XY newPos = pos; //描画座標.
@@ -262,7 +268,8 @@ namespace KR
 				_flt(extend), _flt(_rad(newAng)), handle, isTrans
 			);
 			if (err < 0) {
-				return {-1, _T("DrawImg::DrawRota"), _T("DrawRotaGraph2Fエラー") };
+				throw ErrorMsg(_T("DrawImg::DrawRota"), _T("DrawRotaGraph2Fエラー"));
+				return;
 			}
 		}
 		else {
@@ -275,19 +282,20 @@ namespace KR
 				_flt(_rad(newAng)), handle, isTrans
 			);
 			if (err < 0) {
-				return {-2, _T("DrawImg::DrawRota"), _T("DrawRotaGraph2エラー")};
+				throw ErrorMsg(_T("DrawImg::DrawRota"), _T("DrawRotaGraph2エラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawImg::DrawRota"), _T("正常終了")};
 	}
 	
 	/*
 	   DrawModiGraphの改造版.
 	*/
-	ResultInt DrawImg::DrawModi(DBL_XY luPos, DBL_XY ruPos, DBL_XY rdPos, DBL_XY ldPos, bool isTrans, bool isFloat, bool isCameraDisp) const {
+	void DrawImg::DrawModi(DBL_XY luPos, DBL_XY ruPos, DBL_XY rdPos, DBL_XY ldPos, bool isTrans, bool isFloat, bool isCameraDisp) const {
 	
 		if (handle == NONE_HANDLE) {
-			return {-3, _T("DrawImg::DrawModi"), _T("ハンドル未設定")};
+			throw ErrorMsg(_T("DrawImg::DrawModi"), _T("ハンドル未設定"));
+			return;
 		}
 
 		//描画座標.
@@ -305,7 +313,8 @@ namespace KR
 				_flt(newPos[2].x), _flt(newPos[2].y), _flt(newPos[3].x), _flt(newPos[3].y), handle, isTrans
 			);
 			if (err < 0) {
-				return {-1, _T("DrawImg::DrawModi"), _T("DrawModiGraphFエラー")};
+				throw ErrorMsg(_T("DrawImg::DrawModi"), _T("DrawModiGraphFエラー"));
+				return;
 			}
 		}
 		else {
@@ -315,10 +324,10 @@ namespace KR
 				_int_r(newPos[2].x), _int_r(newPos[2].y), _int_r(newPos[3].x), _int_r(newPos[3].y), handle, isTrans
 			);
 			if (err < 0) {
-				return {-2, _T("DrawImg::DrawModi"), _T("DrawModiGraphエラー")};
+				throw ErrorMsg(_T("DrawImg::DrawModi"), _T("DrawModiGraphエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawImg::DrawModi"), _T("正常終了")};
 	}
 
 // ▼*--=<[ DrawImgMng ]>=--*▼ //
@@ -332,6 +341,11 @@ namespace KR
 			i.second.Release(); //各画像の解放.
 		}
 		images.clear(); //データを空にする.
+	}
+
+	//共通パスを設定.
+	void DrawImgMng::SetPath(MY_STRING _path) {
+		inst.path = _path;
 	}
 
 	//画像取得.
@@ -355,22 +369,25 @@ namespace KR
 	/*
 	   画像読み込み.
 	*/
-	ResultInt DrawImgMng::LoadFile(MY_STRING fileName, string saveName) {
+	void DrawImgMng::LoadFile(MY_STRING fileName, string saveName) {
 
 		//既に存在すれば.
 		if (inst.images.count(saveName) > 0) {
-			return { -1, _T("DrawImgMng::LoadFile"), _T("使用済みの保存名") };
+			throw ErrorMsg(_T("DrawImgMng::LoadFile"), _T("使用済みの保存名"));
+			return;
 		}
 
-		//画像読み込み.
-		int handle = LoadGraph(fileName.c_str());
+		//パスを作成.
+		const MY_STRING pathFull = inst.path + fileName;
+
+		//ファイル読み込み.
+		int handle = LoadGraph(pathFull.c_str());
 		if (handle < 0) {
-			return { -2, _T("DrawImgMng::LoadFile"), _T("LoadGraphエラー") };
+			throw ErrorMsg(_T("DrawImgMng::LoadFile"), _T("LoadGraphエラー"));
+			return;
 		}
 		//画像登録.
 		inst.images[saveName].SetImage(handle);
-
-		return { 0, _T("DrawImgMng::LoadFile"), _T("正常終了") };
 	}
 
 	/*
@@ -382,22 +399,27 @@ namespace KR
 	       {"idle","run1","jump","death"}    //登録名.
 	   );
 	*/
-	ResultInt DrawImgMng::LoadFileDiv(MY_STRING fileName, INT_XY size, INT_XY cnt, vector<string> saveName) {
+	void DrawImgMng::LoadFileDiv(MY_STRING fileName, INT_XY size, INT_XY cnt, vector<string> saveName) {
 		
 		const int divCnt = cnt.x * cnt.y; //分割数.
 
 		//分割数と一致しない場合.
 		if (saveName.size() != divCnt) {
-			return { -1, _T("DrawImgMng::LoadFileDiv"), _T("保存名の数が分割数と不一致") };
+			throw ErrorMsg(_T("DrawImgMng::LoadFileDiv"), _T("保存名の数が分割数と不一致"));
+			return;
 		}
 
 		//LoadDivGraphからハンドルを取り出す用.
 		int* pHandle = new int[divCnt];
+		//パスを作成.
+		const MY_STRING pathFull = inst.path + fileName;
+
 		//画像読み込み(分割)
-		int err = LoadDivGraph(fileName.c_str(), divCnt, cnt.x, cnt.y, size.x, size.y, pHandle);
+		int err = LoadDivGraph(pathFull.c_str(), divCnt, cnt.x, cnt.y, size.x, size.y, pHandle);
 		if (err < 0) {
 			delete[] pHandle; pHandle = nullptr; //配列破棄.
-			return { -2, _T("DrawImgMng::LoadFileDiv"), _T("LoadDivGraphエラー") };
+			throw ErrorMsg(_T("DrawImgMng::LoadFileDiv"), _T("LoadDivGraphエラー"));
+			return;
 		}
 
 		//読み込んだ画像をループ.
@@ -405,20 +427,20 @@ namespace KR
 			//既に存在すれば.
 			if (inst.images.count(saveName[i]) > 0) {
 				delete[] pHandle; pHandle = nullptr; //配列破棄.
-				return { -3, _T("DrawImgMng::LoadFileDiv"), _T("使用済みの保存名が含まれている") };
+				throw ErrorMsg(_T("DrawImgMng::LoadFileDiv"), _T("使用済みの保存名が含まれている"));
+				return;
 			}
 			//画像登録.
 			inst.images[saveName[i]].SetImage(pHandle[i]);
 		}
 
-		delete[] pHandle; pHandle = nullptr; //配列破棄.		
-		return { 0, _T("DrawImgMng::LoadFileDiv"), _T("正常終了") };
+		delete[] pHandle; pHandle = nullptr; //配列破棄.
 	}
 
 // ▼*--=<[ DrawStr ]>=--*▼ //
 
 	//DrawStringの改造版.
-	ResultInt DrawStr::Draw(Anchor anc, int font, bool isCameraDisp) {
+	void DrawStr::Draw(Anchor anc, int font, bool isCameraDisp) {
 	
 		//描画座標.
 		DBL_XY newPos = (isCameraDisp) ? App::ToWorldPos(pos.ToDbl()) : pos.ToDbl();
@@ -431,20 +453,21 @@ namespace KR
 		if (font < 0) {
 			int err = DrawString(x, y, text.c_str(), color.GetColorCode());
 			if (err < 0) {
-				return {-1, _T("DrawStr::Draw"), _T("DrawStringエラー")};
+				throw ErrorMsg(_T("DrawStr::Draw"), _T("DrawStringエラー"));
+				return;
 			}
 		}
 		//フォント設定あり.
 		else {
 			int err = DrawStringToHandle(x, y, text.c_str(), color.GetColorCode(), font);
 			if (err < 0) {
-				return {-2, _T("DrawStr::Draw"), _T("DrawStringToHandleエラー")};
+				throw ErrorMsg(_T("DrawStr::Draw"), _T("DrawStringToHandleエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawStr::Draw"), _T("正常終了")};
 	}
 	//DrawRotaStringの改造版.
-	ResultInt DrawStr::DrawRota(INT_XY extend, INT_XY pivot, double ang, bool isVertical, int font, bool isCameraDisp) {
+	void DrawStr::DrawRota(INT_XY extend, INT_XY pivot, double ang, bool isVertical, int font, bool isCameraDisp) {
 
 		DBL_XY newPos = pos.ToDbl(); //描画座標.
 		double newAng = ang;         //描画角度.
@@ -461,7 +484,8 @@ namespace KR
 				_rad(newAng), color.GetColorCode(), 0, isVertical, text.c_str()
 			);
 			if (err < 0) {
-				return {-1, _T("DrawStr::DrawRota"), _T("DrawRotaStringエラー")};
+				throw ErrorMsg(_T("DrawStr::DrawRota"), _T("DrawRotaStringエラー"));
+				return;
 			}
 		}
 		//フォント設定あり.
@@ -471,13 +495,13 @@ namespace KR
 				_rad(newAng), color.GetColorCode(), font, 0, isVertical, text.c_str()
 			);
 			if (err < 0) {
-				return {-2, _T("DrawStr::DrawRota"), _T("DrawRotaStringToHandleエラー")};
+				throw ErrorMsg(_T("DrawStr::DrawRota"), _T("DrawRotaStringToHandleエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawStr::DrawRota"), _T("正常終了")};
 	}
 	//DrawModiStringの改造版.
-	ResultInt DrawStr::DrawModi(INT_XY luPos, INT_XY ruPos, INT_XY rdPos, INT_XY ldPos, bool isVertical, int font, bool isCameraDisp) {
+	void DrawStr::DrawModi(INT_XY luPos, INT_XY ruPos, INT_XY rdPos, INT_XY ldPos, bool isVertical, int font, bool isCameraDisp) {
 
 		//描画座標.
 		DBL_XY newPos[4] = { luPos.ToDbl(), ruPos.ToDbl(), rdPos.ToDbl(), ldPos.ToDbl() };
@@ -494,7 +518,8 @@ namespace KR
 				color.GetColorCode(), 0, isVertical, text.c_str()
 			);
 			if (err < 0) {
-				return {-1, _T("DrawStr::DrawModi"), _T("DrawModiStringエラー")};
+				throw ErrorMsg(_T("DrawStr::DrawModi"), _T("DrawModiStringエラー"));
+				return;
 			}
 		}
 		//フォント設定あり.
@@ -505,10 +530,10 @@ namespace KR
 				color.GetColorCode(), font, 0, isVertical, text.c_str()
 			);
 			if (err < 0) {
-				return {-2, _T("DrawStr::DrawModi"), _T("DrawModiStringToHandleエラー")};
+				throw ErrorMsg(_T("DrawStr::DrawModi"), _T("DrawModiStringToHandleエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawStr::DrawModi"), _T("正常終了")};
 	}
 
 	//テキストのサイズ取得.
@@ -598,21 +623,21 @@ namespace KR
 	/*
 	   DrawPixelの改造版.
 	*/
-	ResultInt DrawPixelKR(DBL_XY pos, MY_COLOR color, bool isCameraDisp) {
+	void DrawPixelKR(DBL_XY pos, MY_COLOR color, bool isCameraDisp) {
 		//描画座標.
 		DBL_XY newPos = (isCameraDisp) ? App::ToWorldPos(pos) : pos;
 		//描画.
 		int err = DrawPixel(_int_r(newPos.x), _int_r(newPos.y), color.GetColorCode());
 		if (err < 0) {
-			return { -1, _T("DrawPixelKR"), _T("DrawPixelエラー") };
+			throw ErrorMsg(_T("DrawPixelKR"), _T("DrawPixelエラー"));
+			return;
 		}
-		return { 0, _T("DrawPixelKR"), _T("正常終了") };
 	}
 
 	/*
 	   DrawCircleの改造版.
 	*/
-	ResultInt DrawCircleKR(const Circle& cir, Anchor anc, bool isFill, bool isAnti, bool isCameraDisp) {
+	void DrawCircleKR(const Circle& cir, Anchor anc, bool isFill, bool isAnti, bool isCameraDisp) {
 
 		//描画座標.
 		DBL_XY newPos = (isCameraDisp) ? App::ToWorldPos(cir.pos) : cir.pos;
@@ -625,27 +650,28 @@ namespace KR
 			//posnum(角形数)は60に設定する.
 			int err = DrawCircleAA(x, y, cir.r, 60, cir.color.GetColorCode(), isFill, cir.thick);
 			if (err < 0) {
-				return {-1, _T("DrawCircleKR"), _T("DrawCircleAAエラー")};
+				throw ErrorMsg(_T("DrawCircleKR"), _T("DrawCircleAAエラー"));
+				return;
 			}
 		}
 		//アンチエイリアスなし.
 		else{
 			int err = DrawCircle(_int_r(x), _int_r(y), _int_r(cir.r), cir.color.GetColorCode(), isFill, _int_r(cir.thick));
 			if (err < 0) {
-				return {-2, _T("DrawCircleKR"), _T("DrawCircleエラー")};
+				throw ErrorMsg(_T("DrawCircleKR"), _T("DrawCircleエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawCircleKR"), _T("正常終了")};
 	}
 	
 	/*
 	   DrawBoxの改造版.
 	   thickはAA版にしかないため、AAなしの場合は使わない.
 	*/
-	ResultInt DrawBoxKR(const Box& box, Anchor anc, bool isFill, bool isAnti, bool isCameraDisp) {
+	void DrawBoxKR(const Box& box, Anchor anc, bool isFill, bool isAnti, bool isCameraDisp) {
 
 		if (box.size.x <= 0.0 || box.size.y <= 0.0) {
-			return {-3, _T("DrawCircleKR"), _T("サイズが0.0以下") };
+			return;
 		}
 
 		//描画座標.
@@ -660,24 +686,25 @@ namespace KR
 		if (isAnti) {
 			int err = DrawBoxAA(x1, y1, x2+1, y2+1, box.color.GetColorCode(), isFill, box.thick);
 			if (err < 0) {
-				return {-1, _T("DrawBoxKR"), _T("DrawBoxAAエラー")};
+				throw ErrorMsg(_T("DrawBoxKR"), _T("DrawBoxAAエラー"));
+				return;
 			}
 		}
 		//アンチエイリアスなし.
 		else {
 			int err = DrawBox(_int(x1), _int(y1), _int(x2+1), _int(y2+1), box.color.GetColorCode(), isFill);
 			if (err < 0) {
-				return {-2, _T("DrawBoxKR"), _T("DrawBoxエラー")};
+				throw ErrorMsg(_T("DrawBoxKR"), _T("DrawBoxエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawBoxKR"), _T("正常終了")};
 	}
 	
 	/*
 	   DrawTriangleの改造版.
 	   thickはAA版にしかないため、AAなしの場合は使わない.
 	*/
-	ResultInt DrawTriangleKR(const Triangle& tri, bool isFill, bool isAnti, bool isCameraDisp) {
+	void DrawTriangleKR(const Triangle& tri, bool isFill, bool isAnti, bool isCameraDisp) {
 
 		//描画座標.
 		DBL_XY newPos[3] = { tri.pos[0], tri.pos[1], tri.pos[2] };
@@ -694,7 +721,8 @@ namespace KR
 				_flt(newPos[2].x), _flt(newPos[2].y), tri.color.GetColorCode(), isFill, tri.thick
 			);
 			if (err < 0) {
-				return {-1, _T("DrawTriangleKR"), _T("DrawTriangleAAエラー")};
+				throw ErrorMsg(_T("DrawTriangleKR"), _T("DrawTriangleAAエラー"));
+				return;
 			}
 		}
 		//アンチエイリアスなし.
@@ -705,16 +733,16 @@ namespace KR
 				_int_r(newPos[2].x), _int_r(newPos[2].y), tri.color.GetColorCode(), isFill
 			);
 			if (err < 0) {
-				return {-2, _T("DrawTriangleKR"), _T("DrawTriangleエラー")};
+				throw ErrorMsg(_T("DrawTriangleKR"), _T("DrawTriangleエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawTriangleKR"), _T("正常終了")};
 	}
 	
 	/*
 	   DrawLineの改造版.
 	*/
-	ResultInt DrawLineKR(const Line& line, bool isAnti, bool isCameraDisp) {
+	void DrawLineKR(const Line& line, bool isAnti, bool isCameraDisp) {
 
 		//描画座標.
 		DBL_XY newPos[2] = { line.stPos, line.edPos };
@@ -730,7 +758,8 @@ namespace KR
 				_flt(newPos[1].x), _flt(newPos[1].y), line.color.GetColorCode(), line.thick
 			);
 			if (err < 0) {
-				return {-1, _T("DrawLineKR"), _T("DrawLineAAエラー")};
+				throw ErrorMsg(_T("DrawLineKR"), _T("DrawLineAAエラー"));
+				return;
 			}
 		}
 		//アンチエイリアスなし.
@@ -740,21 +769,20 @@ namespace KR
 				_int_r(newPos[1].x), _int_r(newPos[1].y), line.color.GetColorCode(), _int_r(line.thick)
 			);
 			if (err < 0) {
-				return {-2, _T("DrawLineKR"), _T("DrawLineエラー")};
+				throw ErrorMsg(_T("DrawLineKR"), _T("DrawLineエラー"));
+				return;
 			}
 		}
-		return {0, _T("DrawLineKR"), _T("正常終了")};
 	}
 	
 	/*
 	   扇形を描画.
 	*/
-	ResultInt DrawPieKR(const Pie& pie, bool isAnti, bool isCameraDisp) {
+	void DrawPieKR(const Pie& pie, bool isAnti, bool isCameraDisp) {
 
 		DrawArcKR(pie, isAnti, isCameraDisp); //そのまま弧も描く.
 
-		Line line;     //描画用の線.
-		ResultInt err; //エラー判定用.
+		Line line; //描画用の線.
 
 		//ベクトルを求める.
 		DBL_XY vec1 = Calc::AngToVector(pie.stAng);            //扇の始まりの角度.
@@ -762,28 +790,35 @@ namespace KR
 		//座標を求める.
 		DBL_XY pos1 = pie.pos + vec1 * pie.r;
 		DBL_XY pos2 = pie.pos + vec2 * pie.r;
+
 		//線1を描画.
 		line.stPos = pos1;
 		line.edPos = pie.pos;
 		line.color = pie.color;
 		line.thick = pie.thick;
-		err = DrawLineKR(line, isAnti, isCameraDisp);
-		if (err.GetCode() < 0) {
-			return {-1, _T("DrawPieKR"), _T("DrawLineKR 1つ目エラー")};
+		try {
+			DrawLineKR(line, isAnti, isCameraDisp);
 		}
+		catch (const ErrorMsg& err) {
+			throw ErrorMsg(_T("DrawPieKR"), err.GetResult());
+			return;
+		}
+
 		//線2を描画.
 		line.stPos = pos2;
-		err = DrawLineKR(line, isAnti, isCameraDisp);
-		if (err.GetCode() < 0) {
-			return {-2, _T("DrawPieKR"), _T("DrawLineKR 2つ目エラー")};
+		try {
+			DrawLineKR(line, isAnti, isCameraDisp);
 		}
-		return {0, _T("DrawPieKR"), _T("正常終了")};
+		catch (const ErrorMsg& err) {
+			throw ErrorMsg(_T("DrawPieKR"), err.GetResult());
+			return;
+		}
 	}
 	
 	/*
 	   円弧を描画.
 	*/
-	ResultInt DrawArcKR(const Pie& pie, bool isAnti, bool isCameraDisp) {
+	void DrawArcKR(const Pie& pie, bool isAnti, bool isCameraDisp) {
 
 		const double addAng = 1.0;                    //一度で描く線の長さ.
 		const double edAng  = pie.stAng + pie.arcAng; //弧の終わりの角度.
@@ -805,19 +840,21 @@ namespace KR
 			line.color = pie.color;
 			line.thick = pie.thick;
 			//線を描画.
-			ResultInt err = DrawLineKR(line, isAnti, isCameraDisp);
-			if (err.GetCode() < 0) {
-				return {-1, _T("DrawArcKR"), _T("DrawLineKRエラー")};
+			try {
+				DrawLineKR(line, isAnti, isCameraDisp);
+			}
+			catch (const ErrorMsg& err) {
+				throw ErrorMsg(_T("DrawArcKR"), err.GetResult());
+				return;
 			}
 		}
-		return {0, _T("DrawArcKR"), _T("正常終了")};
 	}
 	
 	/*
 	   ベジエ曲線描画.
 	   isDotがtrueの場合、isAntiは使わない.
 	*/
-	ResultInt DrawBezierLineKR(const BezierLine& bLine, bool isDot, bool isAnti, bool isCameraDisp) {
+	void DrawBezierLineKR(const BezierLine& bLine, bool isDot, bool isAnti, bool isCameraDisp) {
 
 		const int segments = 100; //曲線全体の分割数.
 
@@ -834,9 +871,12 @@ namespace KR
 				//1点を取得.
 				DBL_XY pos = Calc::BezierPoint(bLine, t);
 				//描画.
-				ResultInt err = DrawPixelKR(pos, bLine.color, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -1, _T("DrawBezierLineKR"), _T("ドット描画でエラー") };
+				try {
+					DrawPixelKR(pos, bLine.color, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("DrawBezierLineKR"), err.GetResult());
+					return;
 				}
 			}
 			else {
@@ -844,20 +884,22 @@ namespace KR
 				line.stPos = Calc::BezierPoint(bLine, t);
 				line.edPos = Calc::BezierPoint(bLine, nt);
 				//線描画.
-				ResultInt err = DrawLineKR(line, isAnti, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -2, _T("DrawBezierLineKR"), _T("線描画でエラー") };
+				try {
+					DrawLineKR(line, isAnti, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("DrawBezierLineKR"), err.GetResult());
+					return;
 				}
 			}
 		}
-		return {0, _T("DrawBezierLineKR"), _T("正常終了")};
 	}
 
 	/*
 	   スプライン曲線描画.
 	   isDotがtrueの場合、isAntiは使わない.
 	*/
-	ResultInt DrawSplineKR(const Spline& spline, int degree, bool isDot, bool isAnti, bool isCameraDisp) {
+	void DrawSplineKR(const Spline& spline, int degree, bool isDot, bool isAnti, bool isCameraDisp) {
 
 		const int segments = 100; //曲線全体の分割数.
 
@@ -871,9 +913,12 @@ namespace KR
 				//1点を取得.
 				DBL_XY pos = Calc::SplinePoint(spline, degree, t);
 				//描画.
-				ResultInt err = DrawPixelKR(pos, spline.color, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -1, _T("DrawSplineKR"), _T("ドット描画でエラー") };
+				try {
+					DrawPixelKR(pos, spline.color, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("DrawSplineKR"), err.GetResult());
+					return;
 				}
 			}
 			else {
@@ -883,21 +928,22 @@ namespace KR
 				line.edPos = Calc::SplinePoint(spline, degree, nt);
 				line.thick = spline.thick;
 				//描画.
-				ResultInt err = DrawLineKR(line, isAnti, isCameraDisp);
-				if (err.GetCode() < 0) {
-					return { -2, _T("DrawSplineKR"), _T("線描画でエラー") };
+				try {
+					DrawLineKR(line, isAnti, isCameraDisp);
+				}
+				catch (const ErrorMsg& err) {
+					throw ErrorMsg(_T("DrawSplineKR"), err.GetResult());
+					return;
 				}
 			}
 		}
-
-		return { 0, _T("DrawSplineKR"), _T("正常終了") };
 	}
 
 	/*
 	   ポリゴン描画.
 	   基準点から頂点を相対座標で描く.
 	*/
-	ResultInt DrawPolygonKR(const Polygon& poly, bool isSurround, bool isAnti, bool isCameraDisp) {
+	void DrawPolygonKR(const Polygon& poly, bool isSurround, bool isAnti, bool isCameraDisp) {
 
 		Line line; //描画用.
 		line.color = poly.color;
@@ -913,12 +959,14 @@ namespace KR
 			line.stPos = poly.pos + poly.points[i];
 			line.edPos = poly.pos + poly.points[(i+1) % poly.points.size()]; //サイズを超えたら0に戻す.
 			//描画.
-			ResultInt err = DrawLineKR(line, isAnti, isCameraDisp);
-			if (err.GetCode() < 0) {
-				return { -1, _T("DrawPolygonKR"), _T("DrawLineKRエラー") };
+			try {
+				DrawLineKR(line, isAnti, isCameraDisp);
+			}
+			catch (const ErrorMsg& err) {
+				throw ErrorMsg(_T("DrawPolygonKR"), err.GetResult());
+				return;
 			}
 		}
-		return { 0, _T("DrawPolygonKR"), _T("正常終了") };
 	}
 	/*
 	   ===== 問題 =====
@@ -1026,7 +1074,7 @@ namespace KR
 	/*
 	   画面全体にグリッド線を描画.
 	*/
-	ResultInt DrawWindowGrid(int wid, int hei, int size, MY_COLOR clrWid, MY_COLOR clrHei) {
+	void DrawWindowGrid(int wid, int hei, int size, MY_COLOR clrWid, MY_COLOR clrHei) {
 
 		Line line;
 
@@ -1037,9 +1085,12 @@ namespace KR
 			line.edPos = { _dbl(x), _dbl(hei) };
 			line.color = clrHei;
 			//描画.
-			ResultInt err = DrawLineKR(line);
-			if (err.GetCode() < 0) {
-				return {-1, _T("DrawWindowGrid"), _T("縦線でエラー")};
+			try {
+				DrawLineKR(line);
+			}
+			catch (const ErrorMsg& err) {
+				throw ErrorMsg(_T("DrawWindowGrid"), err.GetResult());
+				return;
 			}
 		}
 		//横線の描画.
@@ -1049,18 +1100,20 @@ namespace KR
 			line.edPos = { _dbl(wid), _dbl(y) };
 			line.color = clrWid;
 			//描画.
-			ResultInt err = DrawLineKR(line);
-			if (err.GetCode() < 0) {
-				return {-2, _T("DrawWindowGrid"), _T("横線でエラー")};
+			try {
+				DrawLineKR(line);
+			}
+			catch (const ErrorMsg& err) {
+				throw ErrorMsg(_T("DrawWindowGrid"), err.GetResult());
+				return;
 			}
 		}
-		return {0, _T("DrawWindowGrid"), _T("正常終了")};
 	}
 
 	/*
 	   キューブ(3D) [試作品]
 	*/
-	ResultInt DrawBox3DKR(const Box3D& box, bool isFill) {
+	void DrawBox3DKR(const Box3D& box, bool isFill) {
 
 		//描画座標.
 		DBL_XYZ newPos[2] = { box.stPos, box.edPos };
@@ -1071,8 +1124,8 @@ namespace KR
 		//描画.
 		int err = DrawCube3D(vec1, vec2, box.difColor.GetColorCode(), box.spcColor.GetColorCode(), isFill);
 		if (err < 0) {
-			return {-1, _T("DrawBox3DKR"), _T("描画エラー")};
+			throw ErrorMsg(_T("DrawBox3DKR"), _T("描画エラー"));
+			return;
 		}
-		return {0, _T("DrawBox3DKR"), _T("正常終了")};
 	}
 }
