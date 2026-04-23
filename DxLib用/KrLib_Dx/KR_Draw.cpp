@@ -671,6 +671,7 @@ namespace KR
 	void DrawBoxKR(const Box& box, Anchor anc, bool isFill, bool isAnti, bool isCameraDisp) {
 
 		if (box.size.x <= 0.0 || box.size.y <= 0.0) {
+			throw ErrorMsg(_T("DrawCircleKR"), _T("ƒTƒCƒY‚ª0.0ˆÈ‰º"));
 			return;
 		}
 

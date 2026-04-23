@@ -34,9 +34,8 @@ namespace KR
 			GetCir()->r = 10;
 			GetCir()->color = ColorID::White;
 		}
-		void Update ()       override;
-		void Draw   ()       override {};               //未使用.
-		bool IsErase() const override { return false; } //未使用.
+		void Update() override;
+		void Draw  () override {}; //未使用.
 
 		//描画.
 		void DrawNormal();
