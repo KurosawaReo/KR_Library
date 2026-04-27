@@ -1,6 +1,6 @@
 /*
    - KR_File.h - (C++)
-   ver.2026/04/23
+   ver.2026/04/27
 
    ファイルの読み取り/書き出し機能。
 */
@@ -10,32 +10,49 @@
   #include "KR_Global.h"
 #endif
 
+#include <fstream>
+#include <filesystem>
+
 //KrLib名前空間.
 namespace KR
 {
-	//ファイルクラス.
-	class File
-	{
-	//▼ ===== 変数 ===== ▼.
-	private:
-		FILE* fp; //ファイルポインタ.
+    //ファイルを開くモード.
+    enum class FileOpenMode
+    {
+        Read,   //読み込み.
+        Write,  //書き込み.
+        Append, //追記(末尾に追加)
+        Trunc,  //開いた時に中身を空にする.
+        Binary  //バイナリモード.
+    };
 
-	//▼ ===== 関数 ===== ▼.
-	private:
-		void MakeDir(MY_STRING path); //フォルダを作成(なければ)
+    //ファイルクラス.
+    class File final
+    {
+    private:
+        std::fstream fs; //ファイルストリーム.
 
-	public:
-		//デストラクタ.
-		~File() {
-			Close(); //自動で閉じる.
-		}
+    public:
+        //デストラクタ.
+        ~File() {
+            Close(); //ファイルを閉じる.
+        }
 
-		void      Open   (MY_STRING path, MY_STRING mode, bool isMakeDir = false); //ファイルを開く.
-		void	  Close  ();								                       //ファイルを閉じる.
+        //EOFかどうか.
+        bool IsEOF();
 
-		MY_STRING ReadString ();               //読み込み(文字列)
-		int       ReadInt    ();               //読み込み(数字)
-		void      WriteString(MY_STRING data); //書き込み(文字列)
-		void      WriteInt   (int data);       //書き込み(数字)
-	};
+        //ファイルを開く.
+        void Open(const std::string& filePath, FileOpenMode mode);
+        //ファイルを閉じる.
+        void Close();
+        //ディレクトリ作成.
+        void MakeDir(const std::filesystem::path& filePath);
+
+        //読み込み, 書き込み.
+        string ReadString ();
+        int    ReadInt    ();
+        void   WriteString(const std::string& data);
+        void   WriteInt   (int data);
+
+    };
 }

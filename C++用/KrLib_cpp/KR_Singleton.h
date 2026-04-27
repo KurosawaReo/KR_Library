@@ -1,16 +1,10 @@
 /*
    - KR_Singleton.h - (C++)
-   ver.2026/04/16
+   ver.2026/04/27
 
    シングルトンクラス用機能。(試験的)
 */
 #pragma once
-
-/*
-   [TODO]
-   Singleton::GetInst()を初めて実行した時に実体生成するため
-   ManagerBaseと併用して使う場合、App::InitDx()が動く前に実体登録ができない問題がある。
-*/
 
 /*
    シングルトンテンプレ [継承想定]

@@ -1,6 +1,6 @@
 /*
    - KR_StateMachine.h - (DxLib)
-   ver.2026/04/16
+   ver.2026/04/27
 
    ステート遷移機能。
 */

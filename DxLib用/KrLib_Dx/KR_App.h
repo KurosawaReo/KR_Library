@@ -1,6 +1,6 @@
 /*
    - KR_App.h - (DxLib)
-   ver.2026/04/23
+   ver.2026/04/27
 
    プログラムの根底(開始,終了など)の処理。
 */
@@ -9,7 +9,7 @@
 #if !defined DEF_KR_DX_GLOBAL
   #include "KR_Global.h"
 #endif
-//[include] hで使うもの.
+//[include] ".h"ファイルで使うもの.
 #include "KR_Timer.h"
 
 //KrLib名前空間.
@@ -43,7 +43,7 @@ namespace KR
 		static int		GetWindowWid()  { return inst.windowSize.x; } //横幅.
 		static int		GetWindowHei()  { return inst.windowSize.y; } //縦幅.
 		static INT_XY	GetWindowSize() { return inst.windowSize; }   //縦横サイズ.
-		static int		GetFps()        { return inst.fps; }
+		static int		GetFps()        { return inst.fps; }          //フレームレート数.
 
 		//座標変換.
 		static DBL_XY   ToWorldPos (DBL_XY pos);

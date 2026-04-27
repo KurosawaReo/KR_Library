@@ -1,6 +1,6 @@
 /*
    - main.cpp - (DxLib)
-   ver.2026/04/23
+   ver.2026/04/27
 
    プログラムの開始地点(テンプレ)
 */
@@ -40,11 +40,17 @@ int WINAPI WinMain(
 		//初期化処理.
 		App::InitDx(WINDOW_WID, WINDOW_HEI, IS_WINDOW_MODE, FPS, false);
 	}
-	catch (...) {
-		return -1; //エラー終了.
+	catch (const ErrorMsg& err) {
+		Debug::Log(_T("InitDx"), err.GetResult());
 	}
-	//ループ処理.
-	App::LoopDx();
+
+	try {
+		//ループ処理.
+		App::LoopDx();
+	}
+	catch (const ErrorMsg& err) {
+		Debug::Log(_T("LoopDx"), err.GetResult());
+	}
 
 	return 0;
 }

@@ -1,6 +1,6 @@
 /*
    - KR_Debug.h - (DxLib)
-   ver.2026/04/23
+   ver.2026/04/27
 
    変数表示、マウス位置表示などのデバッグ機能。
 */
@@ -9,7 +9,7 @@
 #if !defined DEF_KR_DX_GLOBAL
   #include "KR_Global.h"
 #endif
-//[include] hで使うもの.
+//[include] ".h"ファイルで使うもの.
 #include "KR_Matrix.h"
 
 //KrLib名前空間.

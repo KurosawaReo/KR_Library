@@ -1,6 +1,6 @@
 /*
    - KR_Object.h - (DxLib)
-   ver.2026/04/23
+   ver.2026/04/27
 
    オブジェクト機能。
    継承して使うことで、Draw/Calc/Inputの一部機能をオブジェクト指向で使える。
@@ -14,7 +14,7 @@
 #if !defined DEF_KR_DX_GLOBAL
   #include "KR_Global.h"
 #endif
-//[include] hで使うもの.
+//[include] ".h"ファイルで使うもの.
 #include "KR_Draw.h"
 #include "KR_Timer.h"
 
@@ -46,10 +46,10 @@ namespace KR
 	public:
 		//基本処理.
 		//(ManagerBaseやObjectMngで管理する用)
-		virtual void Init   () = 0;						//初期化.
-		virtual void Update () = 0;						//更新.
-		virtual void Draw   () = 0;						//描画.
-		virtual bool IsErase() const { return false; }	//消滅条件(ObjectMng専用)
+		virtual void Init   ()       = 0; //初期化.
+		virtual void Update ()       = 0; //更新.
+		virtual void Draw   ()       = 0; //描画.
+		virtual bool IsErase() const = 0; //消滅条件(ObjectMng専用)
 
 		//座標, サイズ.
 		virtual void    SetPos   (DBL_XY)       = 0;

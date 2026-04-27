@@ -1,6 +1,6 @@
 /*
    - KR_Input.h - (DxLib)
-   ver.2026/04/16
+   ver.2026/04/27
 
    入力操作機能。
    (オブジェクト指向ver → KR_Object)
@@ -10,7 +10,7 @@
 #if !defined DEF_KR_DX_GLOBAL
   #include "KR_Global.h"
 #endif
-//[include] hで使うもの.
+//[include] ".h"ファイルで使うもの.
 #include "KR_ManagerBase.h"
 
 //KrLib名前空間.
@@ -163,10 +163,6 @@ namespace KR
 	//入力管理クラス.
 	class InputMng final : public ManagerBase
 	{
-	//▼ ===== 実体 ===== ▼.
-	private:
-		static InputMng inst; //実体を入れる用.
-
 	//▼ ===== 変数 ===== ▼.
 	private:
 		int tmKey   [KEY_MAX]{};     //キーを押している時間.
@@ -180,9 +176,6 @@ namespace KR
 
 	//▼ ===== 関数 ===== ▼.
 	private:
-		//コンストラクタ.
-		InputMng() : ManagerBase(ORDER_KR_INPUT_MNG) {}
-
 		DBL_XY GetVector4Dir(INT_XY pow);
 		void   UpdateKey();
 		void   UpdateMouse();
@@ -190,33 +183,35 @@ namespace KR
 		void   UpdateAction();
 
 	public:
+		//コンストラクタ.
+		InputMng(int order) : ManagerBase(order) {}
 
 		//操作判定.
-		static bool   IsPushKey       (KeyID id);
-		static int    IsPushKeyTime   (KeyID id);
-		static bool   IsPushMouse     (MouseID id);
-		static int    IsPushMouseTime (MouseID id);
-		static bool   IsPushPadBtn    (PadXboxID   id);
-		static bool   IsPushPadBtn    (PadSwitchID id);
-		static bool   IsPushPadBtn    (PadArcadeID id);
-		static int    IsPushPadBtnTime(PadXboxID   id);
-		static int    IsPushPadBtnTime(PadSwitchID id);
-		static int    IsPushPadBtnTime(PadArcadeID id);
-		static bool   IsPushAction    (string name);
-		static int    IsPushActionTime(string name);
+		bool   IsPushKey       (KeyID id);
+		int    IsPushKeyTime   (KeyID id);
+		bool   IsPushMouse     (MouseID id);
+		int    IsPushMouseTime (MouseID id);
+		bool   IsPushPadBtn    (PadXboxID   id);
+		bool   IsPushPadBtn    (PadSwitchID id);
+		bool   IsPushPadBtn    (PadArcadeID id);
+		int    IsPushPadBtnTime(PadXboxID   id);
+		int    IsPushPadBtnTime(PadSwitchID id);
+		int    IsPushPadBtnTime(PadArcadeID id);
+		bool   IsPushAction    (string name);
+		int    IsPushActionTime(string name);
 
 		//アクション.
-		static void   AddAction       (string name, KeyID       id);
-		static void   AddAction       (string name, MouseID     id);
-		static void   AddAction       (string name, PadXboxID   id);
-		static void   AddAction       (string name, PadSwitchID id);
-		static void   AddAction       (string name, PadArcadeID id);
+		void   AddAction       (string name, KeyID       id);
+		void   AddAction       (string name, MouseID     id);
+		void   AddAction       (string name, PadXboxID   id);
+		void   AddAction       (string name, PadSwitchID id);
+		void   AddAction       (string name, PadArcadeID id);
 
 		//取得.
-		static DBL_XY GetKey4Dir();
-		static DBL_XY GetPad4Dir();
-		static DBL_XY GetPadStick();
-		static DBL_XY GetMousePos();
+		DBL_XY GetKey4Dir();
+		DBL_XY GetPad4Dir();
+		DBL_XY GetPadStick();
+		DBL_XY GetMousePos();
 
 		//基本処理.
 		void Init()   override {} //未使用.

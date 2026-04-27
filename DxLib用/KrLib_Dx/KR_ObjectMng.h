@@ -1,6 +1,6 @@
 /*
    - KR_ObjectMng.h - (DxLib)
-   ver.2026/04/23
+   ver.2026/04/27
 
    オブジェクトを扱う管理クラス。
 */
@@ -9,7 +9,7 @@
 #if !defined DEF_KR_DX_GLOBAL
   #include "KR_Global.h"
 #endif
-//[include] hで使うもの.
+//[include] ".h"で使うもの.
 #include "KR_ManagerBase.h"
 #include "KR_Object.h"
 
@@ -39,7 +39,7 @@ namespace KR
 		//object生成.
 		//コンストラクタの引数も設定可能.
 		template<typename... Args>
-		void Generate(Args... args) {
+		void NewObject(Args... args) {
 			try {
 				//コンストラクタ実行(引数は任意)
 				auto obj = make_unique<T>(std::forward<Args>(args)...);

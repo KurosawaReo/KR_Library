@@ -1,6 +1,6 @@
 /*
    - KR_Draw.h - (DxLib)
-   ver.2026/04/23
+   ver.2026/04/27
 
    図形や画像の描画機能。
    (オブジェクト指向ver → KR_Object)
@@ -96,7 +96,7 @@ namespace KR
 
 	//▼ ===== 関数 ===== ▼.
 	private:
-		//コンストラクタ(新規作成できなくする)
+		//コンストラクタ.
 		DrawImgMng(){}
 		//デストラクタ.
 		~DrawImgMng();

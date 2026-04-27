@@ -3,7 +3,7 @@
 */
 #include "KR_App.h"
 
-//[include] cppでのみ使うもの.
+//[include] ".cpp"ファイルでのみ使うもの.
 #include "KR_Camera.h"
 #include "KR_ManagerBase.h"
 

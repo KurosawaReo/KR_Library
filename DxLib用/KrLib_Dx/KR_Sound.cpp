@@ -137,8 +137,6 @@ namespace KR
 
 // ▼*--=<[ SoundMng ]>=--*▼ //
 
-	SoundMng SoundMng::inst; //実体生成.
-
 	//デストラクタ.
 	SoundMng::~SoundMng() {
 		//サウンドデータを全て取り出す.
@@ -150,22 +148,22 @@ namespace KR
 
 	//共通パスを設定.
 	void SoundMng::SetPath(MY_STRING _path) {
-		inst.path = _path;
+		path = _path;
 	}
 
 	//サウンド取得.
 	Sound* SoundMng::Get(string saveName) {
 		//存在すれば.
-		if (inst.sounds.count(saveName) > 0) {
-			return &inst.sounds[saveName]; //返す.
+		if (sounds.count(saveName) > 0) {
+			return &sounds[saveName]; //返す.
 		}
 		return nullptr;
 	}
 	//サウンド取得(チェックあり)
 	bool SoundMng::TryGet(string saveName, Sound* ptr) {
 		//存在すれば.
-		if (inst.sounds.count(saveName) > 0) {
-			ptr = &inst.sounds[saveName]; //返す.
+		if (sounds.count(saveName) > 0) {
+			ptr = &sounds[saveName]; //返す.
 			return true;             //取得成功.
 		}
 		return false; //取得失敗.
@@ -175,17 +173,17 @@ namespace KR
 	void SoundMng::LoadFile(MY_STRING fileName, string saveName) {
 	
 		//既に存在すれば.
-		if (inst.sounds.count(saveName) > 0) {
+		if (sounds.count(saveName) > 0) {
 			throw ErrorMsg(_T("SoundMng::LoadFile"), _T("使用済みの保存名"));
 			return;
 		}
 
 		//パスを作成.
-		const MY_STRING pathFull = inst.path + fileName;
+		const MY_STRING pathFull = path + fileName;
 
 		//ファイル読み込み.
 		try {
-			inst.sounds[saveName].LoadFile(pathFull);
+			sounds[saveName].LoadFile(pathFull);
 		}
 		catch (const ErrorMsg& err) {
 			throw ErrorMsg(_T("SoundMng::LoadFile"), err.GetResult());
@@ -193,14 +191,14 @@ namespace KR
 	}
 	//全サウンド停止.
 	void SoundMng::StopAll() {
-		for (auto& i : inst.sounds) {
+		for (auto& i : sounds) {
 			i.second.Stop();
 		}
 	}
 
 	//更新(自動実行)
 	void SoundMng::Update() {
-		for (auto& i : inst.sounds) {
+		for (auto& i : sounds) {
 			i.second.Update(); //各サウンドの更新.
 		}
 	}

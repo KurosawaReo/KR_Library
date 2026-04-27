@@ -3,7 +3,7 @@
 */
 #include "KR_Draw.h"
 
-//[include] cppでのみ使うもの.
+//[include] ".cpp"ファイルでのみ使うもの.
 #include "KR_App.h"
 #include "KR_Calc.h"
 #include "KR_Camera.h"
@@ -671,7 +671,6 @@ namespace KR
 	void DrawBoxKR(const Box& box, Anchor anc, bool isFill, bool isAnti, bool isCameraDisp) {
 
 		if (box.size.x <= 0.0 || box.size.y <= 0.0) {
-			throw ErrorMsg(_T("DrawCircleKR"), _T("サイズが0.0以下"));
 			return;
 		}
 

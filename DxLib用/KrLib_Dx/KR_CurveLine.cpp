@@ -3,13 +3,16 @@
 */
 #include "KR_CurveLine.h"
 
-//[include] cppでのみ使うもの.
+//[include] ".cpp"ファイルでのみ使うもの.
 #include "KR_App.h"
 #include "KR_Calc.h"
 #include "KR_Camera.h"
 #include "KR_Input.h"
 
 #include "KR_Debug.h"
+
+//参照(KRライブラリ)
+static InputMng* inputMng = ManagerInsts::GetInst().Get<InputMng>();
 
 //KrLib名前空間.
 namespace KR
@@ -19,7 +22,7 @@ namespace KR
 	void DragPoint::Update() {
 		//ドラッグされてる時.
 		if (isDrag) {
-			SetPos(InputMng::GetMousePos());
+			SetPos(inputMng->GetMousePos());
 			GetCir()->color = 0x00ffff;
 			//画面外には行かないように.
 			if (IsOutInArea(App::GetWindowRect().ToDbl(), false)) {
@@ -60,11 +63,11 @@ namespace KR
 		if (!isDispPoints) { return; }
 
 		Circle mouse; //マウスカーソル.
-		mouse.pos = InputMng::GetMousePos();
+		mouse.pos = inputMng->GetMousePos();
 		mouse.r = 0;
 
 		//左クリックした瞬間.
-		if (InputMng::IsPushMouseTime(MouseID::Left) == 1) {
+		if (inputMng->IsPushMouseTime(MouseID::Left) == 1) {
 			for (auto& i : points) {
 				//カーソルが円の中なら.
 				if (Calc::HitCirCir(mouse, *i.GetCir())) {
@@ -74,7 +77,7 @@ namespace KR
 			}
 		}
 		//左クリックしている間.
-		if (InputMng::IsPushMouse(MouseID::Left)) {
+		if (inputMng->IsPushMouse(MouseID::Left)) {
 		}
 		else {
 			for (auto& i : points) {

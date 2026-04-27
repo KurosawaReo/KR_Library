@@ -3,9 +3,12 @@
 */
 #include "KR_Object.h"
 
-//[include] cppでのみ使うもの.
+//[include] ".cpp"ファイルでのみ使うもの.
 #include "KR_Calc.h"
 #include "KR_Input.h"
+
+//参照(KRライブラリ)
+static InputMng* inputMng = ManagerInsts::GetInst().Get<InputMng>();
 
 //KrLib名前空間.
 namespace KR
@@ -71,18 +74,18 @@ namespace KR
 
 	//移動操作.
 	void ObjectShape::MoveKey4Dir(float speed) {
-		SetPos(GetPos() + InputMng::GetKey4Dir()  * speed); //現在地 + 入力 * 速度.
+		SetPos(GetPos() + inputMng->GetKey4Dir()  * speed); //現在地 + 入力 * 速度.
 	}
 	void ObjectShape::MovePad4Dir(float speed) {
-		SetPos(GetPos() + InputMng::GetPad4Dir()  * speed); //現在地 + 入力 * 速度.
+		SetPos(GetPos() + inputMng->GetPad4Dir()  * speed); //現在地 + 入力 * 速度.
 	}
 	void ObjectShape::MovePadStick(float speed) {
-		SetPos(GetPos() + InputMng::GetPadStick() * speed); //現在地 + 入力 * 速度.
+		SetPos(GetPos() + inputMng->GetPadStick() * speed); //現在地 + 入力 * 速度.
 	}
 	void ObjectShape::MoveMousePos(bool isMoveX, bool isMoveY) {
 		//有効ならマウス座標を反映.
-		double x = (isMoveX) ? InputMng::GetMousePos().x : GetPos().x;
-		double y = (isMoveY) ? InputMng::GetMousePos().y : GetPos().y;
+		double x = (isMoveX) ? inputMng->GetMousePos().x : GetPos().x;
+		double y = (isMoveY) ? inputMng->GetMousePos().y : GetPos().y;
 		SetPos({x, y});
 	}
 	

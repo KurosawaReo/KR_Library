@@ -1,6 +1,6 @@
 /*
    - KR_Sound.h - (DxLib)
-   ver.2026/04/23
+   ver.2026/04/27
 
    サウンド再生機能。
 */
@@ -9,7 +9,7 @@
 #if !defined DEF_KR_DX_GLOBAL
   #include "KR_Global.h"
 #endif
-//[include] hで使うもの.
+//[include] ".h"ファイルで使うもの.
 #include "KR_ManagerBase.h"
 #include "KR_Timer.h"
 
@@ -57,36 +57,31 @@ namespace KR
 	//サウンド管理クラス.
 	class SoundMng final : public ManagerBase
 	{
-	//▼ ===== 実体 ===== ▼.
-	private:
-		static SoundMng inst; //実体を入れる用.
-
 	//▼ ===== 変数 ===== ▼.
 	private: 
 		umap<string, Sound> sounds; //サウンドデータ.
 		MY_STRING           path;   //共通パス.
 
 	//▼ ===== 関数 ===== ▼.
-	private: 
+	public:
 		//コンストラクタ.
-		SoundMng() : ManagerBase(ORDER_KR_SOUND_MNG) {}
+		SoundMng(int order) : ManagerBase(order) {}
 		//デストラクタ.
 		~SoundMng();
 
-	public:
 		//set.
-		static void   SetPath (MY_STRING path);
+		void   SetPath (MY_STRING path);
 		//get.
-		static Sound* Get     (string saveName);
-		static bool   TryGet  (string saveName, Sound* ptr);
+		Sound* Get     (string saveName);
+		bool   TryGet  (string saveName, Sound* ptr);
 
-		static void   LoadFile(MY_STRING fileName, string saveName); //読み込み.
-		static void   StopAll ();									 //全サウンド停止.
+		void   LoadFile(MY_STRING fileName, string saveName); //読み込み.
+		void   StopAll ();									  //全サウンド停止.
 	
-		void Init()   override {} //未使用.
-		void Reset()  override {} //未使用.
-		void Update() override;
-		void Draw()   override {} //未使用.
+		void   Init()   override {} //未使用.
+		void   Reset()  override {} //未使用.
+		void   Update() override;
+		void   Draw()   override {} //未使用.
 
 		//使用禁止.
 		SoundMng(const SoundMng&) = delete;

@@ -3,92 +3,117 @@
 */
 #include "KR_File.h"
 
-//[include] cppでのみ使うもの.
-#include <direct.h>
-
 //KrLib名前空間.
 namespace KR
 {
-	//ファイルを開く.
-	void File::Open(MY_STRING path, MY_STRING mode, bool isMakeDir) {
+    //EOFかどうか.
+    bool File::IsEOF() {
+        return fs.eof();
+    }
 
-		//先にファイルを閉じる.
-		Close();
-		//フォルダ作成.
-		if (isMakeDir) { MakeDir(path); }
-		//ファイルを開く(fopen)
-		fp = _tfopen(path.c_str(), mode.c_str());
-		if (fp == nullptr) {
-			throw ErrorMsg(_T("File::Open"), _T("読み込みエラー"));
-		}
-	}
-	//ファイルを閉じる.
-	void File::Close() {
+    //ファイルを開く.
+    void File::Open(const std::string& filePath, FileOpenMode mode) {
 
-		//既に開いているファイルがあるなら.
-		if (fp != nullptr) {
-			fclose(fp); //ファイルを閉じる.
-			fp = nullptr;
-		}
-	}
-	//フォルダを作成(なければ)
-	void File::MakeDir(MY_STRING path) {
-		//文字数ループ.
-		for (int i = 0; i < path.size(); i++) {
-			//「/」区切りでフォルダ作成.
-			if (path[i] == '/') {
-				int err = _tmkdir(path.substr(0, i).c_str());
-				if (err < 0) {
-					throw ErrorMsg(_T("File::MakeDir"), _T("_tmkdirエラー"));
-				}
-			}
-		}
-	}
+        Close();           //先に閉じる.
+        MakeDir(filePath); //ディレクトリがなければ作成.
 
-	//読み込み(文字列)
-	MY_STRING File::ReadString() {
+        //列挙値をモードに変換.
+        std::ios::openmode stdMode;
+        switch (mode)
+        {
+        case FileOpenMode::Read:
+            stdMode = std::ios::in;
+            break;
+        case FileOpenMode::Write:
+            stdMode = std::ios::out;
+            break;
+        case FileOpenMode::Append:
+            stdMode = std::ios::app;
+            break;
+        case FileOpenMode::Trunc:
+            stdMode = std::ios::trunc;
+            break;
+        case FileOpenMode::Binary:
+            stdMode = std::ios::binary;
+            break;
+        }
+        //ファイルを開く.
+        fs.open(filePath, stdMode);
+        if (!fs.is_open()) {
+            throw ErrorMsg(_T("File::Open"), _T("ファイル読み込み失敗"));
+        }
+    }
 
-		//既に開いているファイルがあるなら.
-		if (fp != nullptr) {
-			TCHAR str[256];        //文字列格納用.
-			_fgetts(str, 256, fp); //ファイルから読み込み(fgets)
-			return str;
-		}
-		else {
-			throw ErrorMsg(_T("File::ReadString"), _T("読み込み失敗"));
-			return _T("null");
-		}
-	}
-	//読み込み(数字)
-	int File::ReadInt() {
+    //ファイルを閉じる.
+    void File::Close() {
 
-		//既に開いているファイルがあるなら.
-		if (fp != nullptr) {
-			TCHAR str[256];        //文字列格納用.
-			_fgetts(str, 256, fp); //ファイルから読み込み(fgets)
-			return _ttoi(str);     //int型に変換(atoi)
-		}
-		else {
-			throw ErrorMsg(_T("File::ReadInt"), _T("読み込み失敗"));
-			return -1;
-		}
-	}
-	//書き込み(文字列)
-	void File::WriteString(MY_STRING data) {
+        //もし開かれていたら.
+        if (fs.is_open()) {
+            fs.close(); //閉じる.
+        }
+    }
 
-		//既に開いているファイルがあるなら.
-		if (fp != nullptr) {
-			_fputts(data.c_str(), fp); //ファイルに書き込み(fputs)
-		}
-	}
-	//書き込み(数字)
-	void File::WriteInt(int data) {
+    //ディレクトリ作成.
+    void File::MakeDir(const std::filesystem::path& filePath) {
 
-		//既に開いているファイルがあるなら.
-		if (fp != nullptr) {
-			TCHAR str[256];       //文字列格納用.
-			_itot(data, str, 10); //10進数でchar型に変換(itoa)
-			_fputts(str, fp);     //ファイルに書き込み(fputs)
-		}
-	}
+        //親ディレクトリを取得.
+        const auto parentDir = filePath.parent_path();
+        if (parentDir.empty()) return;
+
+        //ディレクトリを作る(既に存在してても問題ない)
+        std::error_code ec;
+        std::filesystem::create_directories(parentDir, ec);
+        if (ec) {
+            throw ErrorMsg(_T("File::MakeDir"), _T("ディレクトリ作成失敗"));
+        }
+    }
+
+    //string型読み込み(1行)
+    string File::ReadString()
+    {
+        //エラーチェック.
+        if (!fs.is_open()) {
+            throw ErrorMsg(_T("File::ReadString"), _T("ファイルが開かれてない"));
+        }
+
+        //1行読み込む.
+        string line;
+        if (!std::getline(fs, line)) {
+            throw ErrorMsg(_T("File::ReadString"), _T("ファイル読み込み失敗"));
+        }
+        return line;
+    }
+    //int型読み込み(1行)
+    int File::ReadInt()
+    {
+        //まず文字列で読み込む.
+        std::string str = ReadString();
+        //int型に変換.
+        try {
+            return std::stoi(str);
+        }
+        catch (...) {
+            throw ErrorMsg(_T("File::ReadInt"), _T("int型変換失敗"));
+        }
+    }
+    //string型書き込み.
+    void File::WriteString(const std::string& data)
+    {
+        //エラーチェック.
+        if (!fs.is_open()) {
+            throw ErrorMsg(_T("File::WriteString"), _T("ファイルが開かれてない"));
+        }
+        //書き込む.
+        fs << data;
+    }
+    //int型書き込み.
+    void File::WriteInt(int data)
+    {
+        //エラーチェック.
+        if (!fs.is_open()) {
+            throw ErrorMsg(_T("File::WriteInt"), _T("ファイルが開かれてない"));
+        }
+        //書き込む.
+        fs << data;
+    }
 }

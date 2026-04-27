@@ -1,6 +1,6 @@
 /*
    - KR_Memory.h - (C++)
-   ver.2026/04/23
+   ver.2026/04/27
 
    メモリ管理機能。
 */
@@ -42,26 +42,5 @@ namespace KR
         //使用禁止.
         MemoryLeak(const MemoryLeak&) = delete;
         MemoryLeak& operator=(const MemoryLeak&) = delete;
-    };
-
-    //ポインタ型を扱うクラス [試作品]
-    template<typename T>
-    class TypePtr
-    {
-    private:
-        T* pointer; //ポインタを入れる用.
-
-    public:
-        //コンストラクタ.
-        TypePtr() : pointer(nullptr) {}
-        //デストラクタ.
-        ~TypePtr() {
-            Delete();
-        }
-        //get.
-        T* GetPtr() const { return pointer; }
-
-        bool New();    //メモリ確保.
-        void Delete(); //メモリ解放.
     };
 }
