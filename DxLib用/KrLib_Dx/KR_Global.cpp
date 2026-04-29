@@ -19,12 +19,12 @@ namespace KR
 			case ColorID::Lime:        return {   0, 255, 128, 255 };
 			case ColorID::Green:	   return {   0, 255,   0, 255 };
 			case ColorID::SpringGreen: return { 128, 255,   0, 255 };
-			case ColorID::Cyan:        return { 255, 255,   0, 255 };
-			case ColorID::SkyBlue:     return { 255, 128,   0, 255 };
+			case ColorID::SkyBlue:     return { 255, 255,   0, 255 };
+			case ColorID::Cyan:        return { 255, 128,   0, 255 };
 			case ColorID::Blue:        return { 255,   0,   0, 255 };
 			case ColorID::Purple:      return { 255,   0, 128, 255 };
-			case ColorID::Magenta:     return { 255,   0, 255, 255 };
-			case ColorID::Pink:        return { 128,   0, 255, 255 };
+			case ColorID::Pink:        return { 255,   0, 255, 255 };
+			case ColorID::Magenta:     return { 128,   0, 255, 255 };
 			case ColorID::White:       return { 255, 255, 255, 255 };
 			case ColorID::Gray:        return { 128, 128, 128, 255 }; 
 			case ColorID::Black:       return {   0,   0,   0, 255 };
