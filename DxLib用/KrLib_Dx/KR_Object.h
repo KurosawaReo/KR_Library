@@ -1,13 +1,9 @@
 /*
    - KR_Object.h - (DxLib)
-   ver.2026/04/27
+   ver.2026/04/29
 
    オブジェクト機能。
    継承して使うことで、Draw/Calc/Inputの一部機能をオブジェクト指向で使える。
-
-   [class]
-   ObjectCir: 円形
-   ObjectBox: 四角形
 */
 #pragma once
 //[include] KR_Global.
@@ -46,10 +42,10 @@ namespace KR
 	public:
 		//基本処理.
 		//(ManagerBaseやObjectMngで管理する用)
-		virtual void Init   ()       = 0; //初期化.
-		virtual void Update ()       = 0; //更新.
-		virtual void Draw   ()       = 0; //描画.
-		virtual bool IsErase() const = 0; //消滅条件(ObjectMng専用)
+		virtual void Init   () = 0; //初期化.
+		virtual void Update () = 0; //更新.
+		virtual void Draw   () = 0; //描画.
+		virtual bool IsErase() const { return false; } //消滅条件(ObjectMng専用)
 
 		//座標, サイズ.
 		virtual void    SetPos   (DBL_XY)       = 0;
@@ -139,16 +135,5 @@ namespace KR
 		bool      HitCheckBox(const Box&    box) const;
 		//描画.
 		void      DrawShape(bool isFill = true, bool isAnti = false, bool isCameraDisp = true) const override;
-	};
-
-	//オブジェクト(グリッド上専用)
-	class ObjectGrid
-	{
-	public:
-		INT_XY pos{};      //座標.
-		bool   isActive{}; //有効かどうか.
-
-		//描画.
-		void Draw(const DrawImg& img, INT_XY gridPos, INT_XY gridSize);
 	};
 }

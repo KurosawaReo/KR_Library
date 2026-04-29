@@ -1,6 +1,6 @@
 /*
    - KR_ManagerInsts.h - (DxLib)
-   ver.2026/04/27
+   ver.2026/04/29
 
    Managerを管理するクラス。
 */
@@ -22,12 +22,6 @@ namespace KR
 	//▼ ===== 実体 ===== ▼.
 	private:
 		static ManagerInsts inst;
-
-	public:
-		//実体取得.
-		static ManagerInsts& GetInst() {
-			return inst;
-		}
 
 	//▼ ===== 変数 ===== ▼.
 	private:
@@ -65,7 +59,7 @@ namespace KR
 		static vector<unique_ptr<ManagerBase>>& GetAll() { return inst.mngInsts; }
 
 		//order値で並べ替え.
-		void SortOrder();
+		static void SortOrder();
 
 		//使用禁止.
 		ManagerInsts(const ManagerInsts&) = delete;

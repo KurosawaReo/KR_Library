@@ -3,6 +3,9 @@
 */
 #include "KR_ManagerInsts.h"
 
+//[include] ".cpp"ファイルでのみ使うもの.
+#include <algorithm>
+
 //KrLib名前空間.
 namespace KR
 {
@@ -12,9 +15,12 @@ namespace KR
 	void ManagerInsts::SortOrder() {
 
 		std::sort(
-			mngInsts.begin(), mngInsts.end(), //管理クラス配列.
+			//管理クラス配列.
+			inst.mngInsts.begin(), 
+			inst.mngInsts.end(),
+			//order値を比較.
 			[](const auto& a, const auto& b) {
-				return a->GetOrder() < b->GetOrder(); //order値を比較.
+				return a->GetOrder() < b->GetOrder();
 			}
 		);
 	}

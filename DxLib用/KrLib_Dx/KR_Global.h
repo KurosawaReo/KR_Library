@@ -1,6 +1,6 @@
 /*
    - KR_Global.h - (DxLib)
-   ver.2026/04/27
+   ver.2026/04/29
 
    KrLib全体で使う汎用プログラム。
 */
@@ -23,11 +23,6 @@
 //KrLib名前空間.
 namespace KR
 {
-	//RGBAデータ(COLOR_U8とほぼ同じだが、こっちはrgbaの順)
-	struct RGBA
-	{
-		BYTE r, g, b, a;
-	};
 	//カラーID(15色対応)
 	enum class ColorID
 	{
@@ -47,11 +42,12 @@ namespace KR
 		Gray,
 		Black,
 	};
+
 	//色データ.
 	class MY_COLOR
 	{
 	private:
-		RGBA color;
+		COLOR_U8 color;
 
 	public:
 		//コンストラクタ.
@@ -65,11 +61,11 @@ namespace KR
 		UINT     GetColorCode() const;
 
 		//代入演算子.
-		void operator=(const RGBA& rgba);
+		void operator=(const COLOR_U8& rgba);
 		void operator=(UINT colorCode);
 		void operator=(ColorID id);
 		//比較演算子.
-		bool operator==(ColorID id);
+		bool operator==(ColorID id) const;
 	};
 
 	/*

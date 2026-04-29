@@ -329,13 +329,13 @@ namespace KR
 					NumLimRange(&time, 0.0, 1.0); //0.0`1.0‚Ì”ÍˆÍ.
 					return 1 - (1 - time) * (1 - time);
 				}
-				//InOutQuad: ™X‚É‰Á‘¬‚µ‚ÄŒ¸‘¬.
+				//InOutQuad: ‰Á‘¬‚µ‚ÄŒ¸‘¬.
 				case EaseType::InOutQuad:
 				{
 					NumLimRange(&time, 0.0, 1.0); //0.0`1.0‚Ì”ÍˆÍ.
 					return time < 0.5 ? 2 * time * time : 1 - pow(-2 * time + 2, 2) / 2;
 				}
-				//OutInQuad: ™X‚ÉŒ¸‘¬‚µ‚Ä‰Á‘¬.
+				//OutInQuad: Œ¸‘¬‚µ‚Ä‰Á‘¬.
 				case EaseType::OutInQuad:
 				{
 					NumLimRange(&time, 0.0, 1.0); //0.0`1.0‚Ì”ÍˆÍ.

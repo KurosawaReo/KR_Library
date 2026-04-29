@@ -9,21 +9,22 @@ namespace KR
 // ▼*--=<[ function ]>=--*▼ //
 
 	//ColorIDをカラーコードに変換.
-	RGBA ColorIDToRGBA(ColorID id) {
+	COLOR_U8 ColorIDToU8(ColorID id) {
 
 		switch (id) {
-			case ColorID::Red:         return { 255,   0,   0, 255 }; 
-			case ColorID::Orange:      return { 255, 128,   0, 255 };
-			case ColorID::Yellow:      return { 255, 255,   0, 255 }; 
-			case ColorID::Lime:        return { 128, 255,   0, 255 };
+			//                                {   B    G    R    A }
+			case ColorID::Red:         return {   0,   0, 255, 255 }; 
+			case ColorID::Orange:      return {   0, 128, 255, 255 };
+			case ColorID::Yellow:      return {   0, 255, 255, 255 }; 
+			case ColorID::Lime:        return {   0, 255, 128, 255 };
 			case ColorID::Green:	   return {   0, 255,   0, 255 };
-			case ColorID::SpringGreen: return {   0, 255, 128, 255 };
-			case ColorID::Cyan:        return {   0, 255, 255, 255 };
-			case ColorID::SkyBlue:     return {   0, 128, 255, 255 };
-			case ColorID::Blue:        return {   0,   0, 255, 255 };
-			case ColorID::Purple:      return { 128,   0, 255, 255 };
+			case ColorID::SpringGreen: return { 128, 255,   0, 255 };
+			case ColorID::Cyan:        return { 255, 255,   0, 255 };
+			case ColorID::SkyBlue:     return { 255, 128,   0, 255 };
+			case ColorID::Blue:        return { 255,   0,   0, 255 };
+			case ColorID::Purple:      return { 255,   0, 128, 255 };
 			case ColorID::Pink:        return { 255,   0, 255, 255 };
-			case ColorID::Magenta:     return { 255,   0, 128, 255 };
+			case ColorID::Magenta:     return { 128,   0, 255, 255 };
 			case ColorID::White:       return { 255, 255, 255, 255 };
 			case ColorID::Gray:        return { 128, 128, 128, 255 }; 
 			case ColorID::Black:       return {   0,   0,   0, 255 };
@@ -36,8 +37,8 @@ namespace KR
 
 	//コンストラクタ.
 	MY_COLOR::MY_COLOR() :                               color{ _byte(255), _byte(255), _byte(255), _byte(255) } {}
-	MY_COLOR::MY_COLOR(int _r, int _g, int _b) :         color{ _byte(_r),  _byte(_g),  _byte(_b),  _byte(255) } {}
-	MY_COLOR::MY_COLOR(int _r, int _g, int _b, int _a) : color{ _byte(_r) , _byte(_g),  _byte(_b),  _byte(_a)  } {}
+	MY_COLOR::MY_COLOR(int _r, int _g, int _b) :         color{ _byte(_b),  _byte(_g),  _byte(_r),  _byte(255) } {}
+	MY_COLOR::MY_COLOR(int _r, int _g, int _b, int _a) : color{ _byte(_b) , _byte(_g),  _byte(_r),  _byte(_a)  } {}
 
 	MY_COLOR::MY_COLOR(UINT _colorCode) {
 		*this = _colorCode; //「=」演算子内で変換.
@@ -45,30 +46,35 @@ namespace KR
 	MY_COLOR::MY_COLOR(ColorID id) {
 		*this = id;         //「=」演算子内で変換.
 	}
+
 	//get.
-	COLOR_U8 MY_COLOR::GetColorU8()   const { return DxLib::GetColorU8(color.r, color.g, color.b, color.a); }
-	UINT     MY_COLOR::GetColorCode() const { return DxLib::GetColor  (color.r, color.g, color.b); }
+	COLOR_U8 MY_COLOR::GetColorU8() const {
+		return color; //そのまま.
+	}
+	UINT MY_COLOR::GetColorCode() const { 
+		return DxLib::GetColor(color.r, color.g, color.b); 
+	}
 
 	//代入演算子.
-	void MY_COLOR::operator=(const RGBA& rgba) {
+	void MY_COLOR::operator=(const COLOR_U8& rgba) {
 		color = rgba; //そのまま.
 	}
 	void MY_COLOR::operator=(UINT colorCode) {
 		//カラーコードをRGBに分解.
-		color.r =  colorCode / 0x010000;
-		color.g = (colorCode / 0x000100) % 0x100;
-		color.b =  colorCode % 0x100;
+		color.r = (colorCode >> 16) & 0xFF;
+		color.g = (colorCode >> 8)  & 0xFF;
+		color.b = (colorCode)       & 0xFF;
 		//透明度は255に.
 		color.a = 255;
 	}
 	void MY_COLOR::operator=(ColorID id) {
-		color = ColorIDToRGBA(id); //RGBAに変換.
+		color = ColorIDToU8(id); //COLOR_U8に変換.
 	}
 
 	//比較演算子.
-	bool MY_COLOR::operator==(ColorID id) {
+	bool MY_COLOR::operator==(ColorID id) const {
 
-		const RGBA other = ColorIDToRGBA(id); //RGBAに変換.
+		const COLOR_U8 other = ColorIDToU8(id); //COLOR_U8に変換.
 		//全て等しいならtrue.
 		return 
 			color.r == other.r && 

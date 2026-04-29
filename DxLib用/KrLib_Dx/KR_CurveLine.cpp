@@ -8,16 +8,15 @@
 #include "KR_Calc.h"
 #include "KR_Camera.h"
 #include "KR_Input.h"
-
-#include "KR_Debug.h"
-
-//参照(KRライブラリ)
-static InputMng* inputMng = ManagerInsts::GetInst().Get<InputMng>();
+#include "KR_ManagerInsts.h"
 
 //KrLib名前空間.
 namespace KR
 {
-// ▼*--=<[ DragPoint ]>=--*▼ //
+	//参照(KRライブラリ)
+	static InputMng* inputMng = ManagerInsts::Get<InputMng>();
+
+	// ▼*--=<[ DragPoint ]>=--*▼ //
 	
 	void DragPoint::Update() {
 		//ドラッグされてる時.

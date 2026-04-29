@@ -21,7 +21,7 @@ namespace KR
 		InOutQuad,
 		OutInQuad,
 	};
-	//ループ波形タイプ.
+	//ループイージングタイプ.
 	enum class WaveType
 	{
 		CosLoop,

@@ -6,6 +6,7 @@
 //[include] ".cpp"ファイルでのみ使うもの.
 #include "KR_Camera.h"
 #include "KR_ManagerBase.h"
+#include "KR_ManagerInsts.h"
 
 //KrLib名前空間.
 namespace KR 
@@ -65,8 +66,10 @@ namespace KR
 		//変数初期化.
 		inst.isQuit = false;
 
+		//order値で並べ替える.
+		ManagerInsts::SortOrder();
 		//Initを実行.
-		for (const auto& i : ManagerInsts::GetInst().GetAll()) {
+		for (const auto& i : ManagerInsts::GetAll()) {
 			i->Init();
 		}
 		//Resetを実行.
@@ -84,7 +87,7 @@ namespace KR
 				//画面クリア.
 				ClearDrawScreen();
 				//Update, Drawを実行.
-				for (const auto& i : ManagerInsts::GetInst().GetAll()) {
+				for (const auto& i : ManagerInsts::GetAll()) {
 					if (i->IsAutoUpdate()) { i->Update(); }
 					if (i->IsAutoDraw())   { i->Draw();   }
 				}
@@ -105,7 +108,7 @@ namespace KR
 	//全管理クラスのリセット.
 	void App::Reset() {
 		//Resetを実行.
-		for (const auto& i : ManagerInsts::GetInst().GetAll()) {
+		for (const auto& i : ManagerInsts::GetAll()) {
 			i->Reset();
 		}
 	}
