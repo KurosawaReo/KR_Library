@@ -13,22 +13,13 @@ namespace KR
 {
 	Camera Camera::inst; //実体生成.
 
-	//角度補正.
-	void Camera::FixAng360() {
-		inst.cameraAng = fmod(inst.cameraAng, 360); //360の余り.
-		//マイナスの値なら.
-		if (cameraAng < 0) {
-			inst.cameraAng += 360; //360度加算.
-		}
-	}
-
 	//set.
 	void Camera::SetPos(DBL_XY _pos) {
 		inst.cameraPos = { _pos.x, _pos.y, 0 };
 	}
 	void Camera::SetAng(double _ang) {
 		inst.cameraAng = _ang;
-		inst.FixAng360();
+		inst.cameraAng = Calc::FixAngle360(inst.cameraAng); //0～360度に正規化.
 	}
 
 	//add.
@@ -48,6 +39,6 @@ namespace KR
 	}
 	void Camera::AddAng(double _ang) {
 		inst.cameraAng += _ang;
-		inst.FixAng360();
+		inst.cameraAng = Calc::FixAngle360(inst.cameraAng); //0～360度に正規化.
 	}
 }

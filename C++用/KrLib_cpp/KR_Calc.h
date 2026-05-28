@@ -1,6 +1,6 @@
 /*
    - KR_Calc.h - (C++)
-   ver.2026/05/21
+   ver.2026/05/28
 
    C++だけでできる計算機能。
 */
@@ -33,6 +33,7 @@ namespace KR
 		//範囲限界.
 		void		FixPosInArea(DBL_XY* pos, INT_XY size, DBL_RECT rect);
 		bool		IsOutInArea	(DBL_XY  pos, INT_XY size, DBL_RECT rect, bool isCompOut);
+		double		FixAngle360	(double ang);
 
 		//角度,ベクトル.
 		double		Dist		(INT_XY pos1, INT_XY pos2);

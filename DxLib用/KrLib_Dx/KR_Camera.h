@@ -1,6 +1,6 @@
 /*
    - KR_Camera.h - (DxLib)
-   ver.2026/05/07
+   ver.2026/05/28
 
    カメラ機能。現状2Dのみ対応。
 */
@@ -36,8 +36,6 @@ namespace KR
 	private:
 		//コンストラクタ.
 		Camera() : cameraPos(0, 0, 0), cameraAng(0) {}
-		//角度補正.
-		void FixAng360();
 
 	public:
 		//get.

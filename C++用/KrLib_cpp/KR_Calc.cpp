@@ -37,6 +37,12 @@ namespace KR
 
 			return false; //”ÍˆÍ“à.
 		}
+		//Šp“x‚ğ0`360“x‚É³‹K‰».
+		double FixAngle360(double ang) {
+			//‡@ -360`360 ‚É‚·‚é.
+			//‡A    0`720 ‚É‚µ‚Ä360‚Å—]‚èZ.
+			return fmod(fmod(ang, 360.0) + 360, 360.0);
+		}
 
 		//‹——£‚ğ‹‚ß‚é.
 		//[À•W1,À•W2 ¨ ’·‚³]
@@ -69,10 +75,7 @@ namespace KR
 		//Šp“x‚Ì·‚ğ‹‚ß‚é.
 		//[•Ô‚è’l:-180.0`180.0]
 		double AngleDiff(double now, double target) {
-			//0`360“x‚É³‹K‰».
-			double diff = fmod(target - now + 540.0, 360.0);
-			//180“xˆø‚­.
-			return diff - 180.0;
+			return FixAngle360(target - now + 180) - 180.0;
 		}
 
 		/*
